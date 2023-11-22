@@ -29,4 +29,8 @@ public class Planeta : MonoBehaviour
     void Start() {
         //Aqui se va a setear el PNG respecto al TipoPlaneta correspondiente
     }
+
+    void Update() {
+        
+    }
 }

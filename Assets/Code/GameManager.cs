@@ -29,7 +29,16 @@ public class GameManager : MonoBehaviour
     void Update() {
 
     }
-    void InitGame(){
-        
+    void InitGame() {
+        EntitySpawner EntitySpawner = FindObjectOfType<EntitySpawner>();
+
+        if (EntitySpawner != null) {
+            Vector3 randomPoint = EntitySpawner.getRandomPointOnPlanetSurface();
+            Debug.Log("Coordenada Aleatoria: " + randomPoint);
+        }
+        else {
+            Debug.LogError("No se encontró un objeto EntitySpawner");
+        }
+
     }
 }
