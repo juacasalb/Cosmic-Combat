@@ -1,4 +1,4 @@
 using UnityEngine;
-public class Munition {
+public class Munition : MonoBehaviour {
     public WeaponType weaponType;
 }

@@ -2,23 +2,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
-    private float movementSpeed = 1f;
+    private float speed;
     private bool isAlive;
     private int healthPoints;
     private bool inShootMode;
     private List<int> ammo;
     private WeaponType currentWeapon;
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     private void HandleWanderMode() {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+        float lag = 90f;
 
-        transform.Translate(Vector3.right * horizontalInput * movementSpeed * Time.deltaTime);
+        if(horizontalInput!=0 || verticalInput!=0)
+            animator.SetBool("isMoving", true);
+        else
+            animator.SetBool("isMoving", false);
+
+        transform.Translate(Vector3.right * speed * horizontalInput * Time.deltaTime);
 
         Vector3 planetCenter = Vector3.zero;
         Vector3 characterPosition = transform.position;
-        float angle = Mathf.Atan2(characterPosition.y - planetCenter.y, characterPosition.x - planetCenter.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        float angle = Mathf.Atan2(characterPosition.y - planetCenter.y, characterPosition.x - planetCenter.x) * Mathf.Rad2Deg - lag;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
         if (Input.GetKeyDown(KeyCode.Space))
             inShootMode = true;
@@ -45,16 +53,21 @@ public class Character : MonoBehaviour {
     private void Shoot() {
         switch (currentWeapon) {
             case WeaponType.Missile:
-                // Código Missile
                 break;
             case WeaponType.Ray:
-                // Código Ray
+                if(ammo[0]>0) {
+                    ammo[0]-=1;
+                }
                 break;
             case WeaponType.Mine:
-                // Código Mine
+                if(ammo[1]>0) {
+                    ammo[1]-=1;
+                }
                 break;
             case WeaponType.Lightsaber:
-                // Código Lightsaber
+                if(ammo[2]>0) {
+                    ammo[2]-=1;
+                }
                 break;
         }
     }
@@ -99,11 +112,20 @@ public class Character : MonoBehaviour {
             }
         }
     }
+
+    private void flip() {
+        if (Input.GetKeyDown(KeyCode.A)) spriteRenderer.flipX = true;
+        else if (Input.GetKeyDown(KeyCode.D)) spriteRenderer.flipX = false;
+    }
+
     private void Start() {
+        speed = 0.35f;
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
         ammo = new List<int> {0, 0, 0};
         fullHealth();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update() {
@@ -115,5 +137,7 @@ public class Character : MonoBehaviour {
             isAlive=false;
             gameObject.SetActive(false);
         }
+        
+        flip();
     }
 }

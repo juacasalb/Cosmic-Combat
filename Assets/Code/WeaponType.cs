@@ -1,5 +1,4 @@
-public enum WeaponType
-{
+public enum WeaponType {
     Missile,
     Ray,
     Mine,
