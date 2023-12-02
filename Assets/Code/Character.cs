@@ -11,46 +11,44 @@ public class Character : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    private void HandleWanderMode() {
+    private void handleWanderMode() {
         float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        float lag = 90f;
 
-        if(horizontalInput!=0 || verticalInput!=0)
-            animator.SetBool("isMoving", true);
-        else
+        if(horizontalInput==0) {
             animator.SetBool("isMoving", false);
+        } else {
+            if(horizontalInput<0)
+                spriteRenderer.flipX = true;
+            else 
+                spriteRenderer.flipX = false;
+            animator.SetBool("isMoving", true);
+        }
 
         transform.Translate(Vector3.right * speed * horizontalInput * Time.deltaTime);
-
-        Vector3 planetCenter = Vector3.zero;
-        Vector3 characterPosition = transform.position;
-        float angle = Mathf.Atan2(characterPosition.y - planetCenter.y, characterPosition.x - planetCenter.x) * Mathf.Rad2Deg - lag;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
         if (Input.GetKeyDown(KeyCode.Space))
             inShootMode = true;
     }
 
-    private void HandleShootMode() {
-        if (Input.GetKeyDown(KeyCode.A)) ChangeWeapon(-1);
-        else if (Input.GetKeyDown(KeyCode.D)) ChangeWeapon(1);
+    private void handleShootMode() {
+        if (Input.GetKeyDown(KeyCode.A)) changeWeapon(-1);
+        else if (Input.GetKeyDown(KeyCode.D)) changeWeapon(1);
 
         if (Input.GetMouseButtonDown(0))
-            Shoot();
+            shoot();
 
         if (Input.GetKeyDown(KeyCode.Space))
             inShootMode = false;
     }
 
-    private void ChangeWeapon(int direction) {
+    private void changeWeapon(int direction) {
         int weaponCount = System.Enum.GetValues(typeof(WeaponType)).Length;
         int currentIndex = (int)currentWeapon;
         currentIndex = (currentIndex + direction + weaponCount) % weaponCount;
         currentWeapon = (WeaponType)currentIndex;
     }
 
-    private void Shoot() {
+    private void shoot() {
         switch (currentWeapon) {
             case WeaponType.Missile:
                 break;
@@ -113,11 +111,6 @@ public class Character : MonoBehaviour {
         }
     }
 
-    private void flip() {
-        if (Input.GetKeyDown(KeyCode.A)) spriteRenderer.flipX = true;
-        else if (Input.GetKeyDown(KeyCode.D)) spriteRenderer.flipX = false;
-    }
-
     private void Start() {
         speed = 0.35f;
         inShootMode = false;
@@ -130,14 +123,12 @@ public class Character : MonoBehaviour {
 
     private void Update() {
         if (!inShootMode)
-            HandleWanderMode();
+            handleWanderMode();
         else
-            HandleShootMode();
+            handleShootMode();
         if(healthPoints<=0) {
             isAlive=false;
             gameObject.SetActive(false);
         }
-        
-        flip();
     }
 }
