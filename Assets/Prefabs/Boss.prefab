@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6660911412328970013}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Character
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

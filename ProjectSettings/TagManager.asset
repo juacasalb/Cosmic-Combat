@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Character
   - Planet
+  - Monster
+  - Munition
   layers:
   - Default
   - TransparentFX

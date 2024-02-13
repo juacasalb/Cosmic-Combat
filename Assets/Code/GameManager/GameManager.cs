@@ -33,10 +33,6 @@ public class GameManager : MonoBehaviour {
 
         if (EntitySpawner != null) {
             Vector3 randomPoint = EntitySpawner.getRandomPointOnPlanetSurface();
-            Debug.Log("Coordenada Aleatoria: " + randomPoint);
-        }
-        else {
-            Debug.LogError("No se encontró un objeto EntitySpawner");
         }
 
     }

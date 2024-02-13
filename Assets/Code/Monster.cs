@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour {
 
-    protected enum monsterType {
+    public enum monsterType {
         Ghost,
         Cyclops,
         Imp

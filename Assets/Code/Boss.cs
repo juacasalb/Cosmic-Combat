@@ -16,7 +16,7 @@ public class Boss : Monster {
     }
 
     public override void looseHealthPoints(int damage) {
-        
+        healthPoints-=(damage-10);
     }
 
     public override void fullHealth() {
