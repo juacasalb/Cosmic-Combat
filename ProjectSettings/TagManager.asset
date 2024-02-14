@@ -8,6 +8,7 @@ TagManager:
   - Planet
   - Monster
   - Munition
+  - Explotion
   layers:
   - Default
   - TransparentFX

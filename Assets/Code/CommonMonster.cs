@@ -7,6 +7,7 @@ public class CommonMonster : Monster {
     private Animator animator;
 
     void Start() {
+        fullHealth();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
@@ -36,7 +37,10 @@ public class CommonMonster : Monster {
     }
 
     void Update() {
-        
+        if(healthPoints<=0) {
+            isAlive = false;
+            gameObject.SetActive(false);
+        }
     }
 
 }

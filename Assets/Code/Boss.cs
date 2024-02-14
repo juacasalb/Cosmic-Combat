@@ -7,6 +7,7 @@ public class Boss : Monster {
     private Animator animator;
 
     void Start() {
+        fullHealth();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
@@ -25,7 +26,10 @@ public class Boss : Monster {
     }
 
     void Update() {
-
+        if(healthPoints<=0) {
+            isAlive = false;
+            gameObject.SetActive(false);
+        }
     }
 
 }

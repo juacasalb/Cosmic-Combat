@@ -29,4 +29,9 @@ public class Monster : MonoBehaviour {
         
     }
 
+    void Update() {
+        
+    }
+
+
 }

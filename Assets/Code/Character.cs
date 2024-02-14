@@ -49,6 +49,7 @@ public class Character : MonoBehaviour {
         int currentIndex = (int)currentWeapon;
         currentIndex = (currentIndex + direction + weaponCount) % weaponCount;
         currentWeapon = (WeaponType)currentIndex;
+        Debug.Log("El arma actual es:" + currentWeapon);
     }
 
     private Vector3 clickCoordinates(Vector3 actualPosition) {
@@ -74,6 +75,11 @@ public class Character : MonoBehaviour {
         missile._direction = scaledMousePosition;
     }
 
+    private void useLightsaber() {
+        Lightsaber lightsaber = transform.Find("Lightsaber").GetComponent<Lightsaber>();
+        lightsaber.gameObject.SetActive(true);
+    }
+
     private void shoot() {
         this.canShoot = false;
         switch (currentWeapon) {
@@ -92,6 +98,7 @@ public class Character : MonoBehaviour {
                 break;
             case WeaponType.Lightsaber:
                 if(ammo[2]>0) {
+                    useLightsaber();
                     ammo[2]-=1;
                 }
                 break;
