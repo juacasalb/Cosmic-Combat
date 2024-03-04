@@ -1,6 +1,6 @@
 public enum WeaponType {
     Missile,
-    Ray,
+    LaserRay,
     Mine,
     Lightsaber
 }

@@ -67,17 +67,36 @@ public class Character : MonoBehaviour {
         Missile missile = transform.Find("Missile").GetComponent<Missile>();
         Vector3 actualPosition = transform.position;
         Vector3 mousePosition = clickCoordinates(actualPosition);
-        Vector3 scaledMousePosition = mousePosition.normalized;
+        Vector3 normalizedPosition = mousePosition.normalized;
 
-        missile.gameObject.transform.position = new Vector3(actualPosition.x + scaledMousePosition.x, 
-            actualPosition.y + scaledMousePosition.y);
+        missile.gameObject.transform.position = new Vector3(actualPosition.x + normalizedPosition.x, 
+            actualPosition.y + normalizedPosition.y);
+
         missile.gameObject.SetActive(true);
-        missile._direction = scaledMousePosition;
+        missile._direction = normalizedPosition;
     }
 
     private void useLightsaber() {
         Lightsaber lightsaber = transform.Find("Lightsaber").GetComponent<Lightsaber>();
         lightsaber.gameObject.SetActive(true);
+    }
+
+    private void shootLaserRay() {
+        LaserRay laserRay = transform.Find("LaserRay").GetComponent<LaserRay>();
+
+        Vector3 actualPosition = transform.position;
+        Vector3 mousePosition = clickCoordinates(actualPosition);
+        Vector2 normalizedPosition = mousePosition.normalized;
+
+        float angle = Mathf.Atan2(normalizedPosition.y, normalizedPosition.x) * Mathf.Rad2Deg;
+        laserRay.gameObject.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        laserRay.gameObject.transform.position = new Vector3(
+            actualPosition.x + normalizedPosition.x*0.5f, 
+            actualPosition.y + normalizedPosition.y*0.5f);
+
+        laserRay.gameObject.SetActive(true);
+        laserRay._direction = normalizedPosition;
     }
 
     private void shoot() {
@@ -86,8 +105,9 @@ public class Character : MonoBehaviour {
             case WeaponType.Missile:
                 shootMissile();
                 break;
-            case WeaponType.Ray:
+            case WeaponType.LaserRay:
                 if(ammo[0]>0) {
+                    shootLaserRay();
                     ammo[0]-=1;
                 }
                 break;
@@ -116,7 +136,7 @@ public class Character : MonoBehaviour {
     }
 
     private void fullHealth() {
-        healthPoints=100;
+        healthPoints=200;
         isAlive=true;
     }
 
@@ -139,7 +159,7 @@ public class Character : MonoBehaviour {
         if(munition!=null) {
             WeaponType weaponType = munition.weaponType;
             switch(weaponType) {
-                case WeaponType.Ray:
+                case WeaponType.LaserRay:
                     ammo[0]+=2;
                     break;
                 case WeaponType.Mine:
