@@ -16,13 +16,10 @@ public class Missile : Weapon {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(actualPosition, areaOfEffect);
 
         foreach (Collider2D collider in colliders) {
-            //Mine mineScript = collider.GetComponent<Mine>();
             Character characterScript = collider.GetComponent<Character>();
             CommonMonster CommonMonsterScript = collider.GetComponent<CommonMonster>();
             Boss BossScript = collider.GetComponent<Boss>();
 
-            /*if (mineScript != null)
-                mineScript.SetActive(false);*/
             if (characterScript != null)
                 characterScript.looseHealthPoints(damage);
             if (CommonMonsterScript != null)

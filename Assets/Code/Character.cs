@@ -99,6 +99,21 @@ public class Character : MonoBehaviour {
         laserRay._direction = normalizedPosition;
     }
 
+    private void placeMine() {
+        Mine mine = GameObject.FindWithTag("Mine").GetComponent<Mine>();
+
+        Vector3 actualPosition = transform.position;
+        Vector3 mousePosition = clickCoordinates(actualPosition);
+        Vector3 placePosition = Vector3.zero;
+        placePosition.x = mousePosition.x >= 0.0f ? 1.0f : -1.0f;
+        placePosition.y = mousePosition.y >= 0.0f ? 1.0f : -1.0f;
+
+        mine.gameObject.transform.position = new Vector3(
+            actualPosition.x + placePosition.x, 
+            actualPosition.y + placePosition.y);
+        
+    }
+
     private void shoot() {
         this.canShoot = false;
         switch (currentWeapon) {
@@ -113,6 +128,7 @@ public class Character : MonoBehaviour {
                 break;
             case WeaponType.Mine:
                 if(ammo[1]>0) {
+                    placeMine();
                     ammo[1]-=1;
                 }
                 break;
@@ -177,7 +193,7 @@ public class Character : MonoBehaviour {
         instantiateShoot();
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
-        ammo = new List<int> {0, 0, 0};
+        ammo = new List<int> {0, 5, 0};
         fullHealth();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
