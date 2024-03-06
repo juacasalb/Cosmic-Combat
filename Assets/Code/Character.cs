@@ -83,6 +83,7 @@ public class Character : MonoBehaviour {
 
     private void shootLaserRay() {
         LaserRay laserRay = transform.Find("LaserRay").GetComponent<LaserRay>();
+        string name = gameObject.name;
 
         Vector3 actualPosition = transform.position;
         Vector3 mousePosition = clickCoordinates(actualPosition);
@@ -97,6 +98,7 @@ public class Character : MonoBehaviour {
 
         laserRay.gameObject.SetActive(true);
         laserRay._direction = normalizedPosition;
+        laserRay.shooterName = name;
     }
 
     private void placeMine() {
@@ -158,7 +160,7 @@ public class Character : MonoBehaviour {
 
     private void instantiateShoot() {
         canShoot=true;
-        shotCooldown=10f;
+        shotCooldown=2f; //10f
     }
 
     private void setShotCooldown() {
@@ -193,7 +195,7 @@ public class Character : MonoBehaviour {
         instantiateShoot();
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
-        ammo = new List<int> {0, 5, 0};
+        ammo = new List<int> {5, 5, 5};
         fullHealth();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Gravity : MonoBehaviour {
     private float gravity = 3f;
+    private float relativeGravityModifier = 1.0f;
     Rigidbody2D rb;
 
     void applyGravity() {
@@ -24,6 +25,18 @@ public class Gravity : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
+    void applyMissileGravity() {
+        if(gameObject.activeSelf) {
+            gravity += (Time.deltaTime/5.0f)*relativeGravityModifier;
+            Debug.Log("Gravedad: " + gravity);
+        }
+        if(gravity <= 3f) {
+            relativeGravityModifier = 1.0f;
+        } else if (gravity >= 4f) {
+            relativeGravityModifier = -1.0f;
+        }
+    }
+
     void Start() {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -31,5 +44,8 @@ public class Gravity : MonoBehaviour {
     void Update() {
         applyGravity();
         applyRotation();
+        if(gameObject.GetComponent<Missile>()!=null) {
+            applyMissileGravity();
+        }
     }
 }

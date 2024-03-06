@@ -141,11 +141,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8907102612067488399, guid: 9155f1c4a99980541b0b097311f1f3c2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 8907102612067488399, guid: 9155f1c4a99980541b0b097311f1f3c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8907102612067488399, guid: 9155f1c4a99980541b0b097311f1f3c2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1379,6 +1379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  shooterName: 
 --- !u!61 &1752375779
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2283,11 +2284,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 910858238992145323, guid: 51676f119f4d2bf498cab8ac6442be30, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 910858238992145323, guid: 51676f119f4d2bf498cab8ac6442be30, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 910858238992145323, guid: 51676f119f4d2bf498cab8ac6442be30, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2327,7 +2328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2501307684771087339, guid: 51676f119f4d2bf498cab8ac6442be30, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

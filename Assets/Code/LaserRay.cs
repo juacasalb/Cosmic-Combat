@@ -12,6 +12,9 @@ public class LaserRay : Weapon {
     private Vector3 direction = Vector3.zero;
     private float speed;
 
+    [HideInInspector]
+    public string shooterName;
+
     void Start() {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         speed = 7f;
@@ -20,7 +23,7 @@ public class LaserRay : Weapon {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if(selfCounter<=1.0f) {
+        if(other.name!=shooterName) {
             if(other.gameObject.GetComponent<Character>() != null) {
                 Character characterScript = other.gameObject.GetComponent<Character>();
                 characterScript.looseHealthPoints(damage);
