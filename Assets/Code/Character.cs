@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
+
+    public GameObject circlePrefab;
+    private List<GameObject> circles;
     private float speed;
     private bool isAlive;
     private int healthPoints;
@@ -14,6 +17,9 @@ public class Character : MonoBehaviour {
     private Animator animator;
 
     private void handleWanderMode() {
+        foreach(var circle in circles) {
+            circle.SetActive(false);
+        }
         float horizontalInput = Input.GetAxis("Horizontal");
 
         if(horizontalInput==0) {
@@ -40,8 +46,9 @@ public class Character : MonoBehaviour {
             shoot();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) {
             inShootMode = false;
+        }
     }
 
     private void changeWeapon(int direction) {
@@ -61,6 +68,23 @@ public class Character : MonoBehaviour {
             mousePosition = mousePosition - actualPosition;
         }
         return new Vector3(mousePosition.x, mousePosition.y, 0);
+    }
+
+    private void setDotsOnScreen() {
+
+        activateDots();
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0.0f;
+
+        Vector3 actualPosition = (mousePosition.normalized)*0.15f + transform.position;
+
+        float i = 0.0f;
+        foreach(var circle in circles) {
+            Vector3 dotPosition = Vector3.Lerp(mousePosition,actualPosition,i);
+            circle.transform.position = dotPosition;
+            i+=0.2f;
+        }
+        
     }
 
     private void shootMissile() {
@@ -190,6 +214,21 @@ public class Character : MonoBehaviour {
         }
     }
 
+    void activateDots() {
+        foreach(var circle in circles) {
+            circle.SetActive(true);
+        }
+    }
+
+    void createDots() {
+        circles = new List<GameObject>();
+        for(int i = 0; i <= 5; i++) {
+            GameObject circleInst = Instantiate(circlePrefab, new Vector3(15.0f, 0.0f, 0.0f), Quaternion.identity);
+            circleInst.SetActive(true);
+            circles.Add(circleInst);
+        }
+    }
+
     private void Start() {
         speed = 0.35f;
         instantiateShoot();
@@ -199,6 +238,8 @@ public class Character : MonoBehaviour {
         fullHealth();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        createDots();
+        activateDots();
     }
 
     private void Update() {
@@ -206,10 +247,15 @@ public class Character : MonoBehaviour {
             handleWanderMode();
         else
             handleShootMode();
+
         if(healthPoints<=0) {
             isAlive=false;
             gameObject.SetActive(false);
         }
+
+        if(inShootMode)
+            setDotsOnScreen();
+
         setShotCooldown();
     }
 }

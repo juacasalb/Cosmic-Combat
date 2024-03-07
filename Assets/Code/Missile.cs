@@ -46,6 +46,11 @@ public class Missile : Weapon {
         if(gameObject.activeSelf) {
             movement();
         }
+        Vector3 position = transform.position;
+        if(position.x > 10 || position.x < -10 || position.y < -7.5 || position.y > 7.5) {
+            gameObject.SetActive(false);
+            direction = Vector3.zero;
+        }
     }
 
 }
