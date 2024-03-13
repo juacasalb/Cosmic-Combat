@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b347c381b726044b2a88474164d7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circlePrefab: {fileID: 2752153389428339131, guid: 950abdf74cb63024eb87de1bdeeaba94, type: 3}
 --- !u!114 &6822348978825198439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,4 +207,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e752c92f8edfd43b86ba8c0d99b648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 1

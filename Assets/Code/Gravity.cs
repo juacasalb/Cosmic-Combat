@@ -28,7 +28,6 @@ public class Gravity : MonoBehaviour {
     void applyMissileGravity() {
         if(gameObject.activeSelf) {
             gravity += (Time.deltaTime/5.0f)*relativeGravityModifier;
-            Debug.Log("Gravedad: " + gravity);
         }
         if(gravity <= 3f) {
             relativeGravityModifier = 1.0f;

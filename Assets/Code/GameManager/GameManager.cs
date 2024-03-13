@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
+    public int killedMonsters;
+
     void Awake(){
         //Check if instance already exists
         if (instance == null)
@@ -24,16 +26,24 @@ public class GameManager : MonoBehaviour {
         //Call the InitGame function to initialize the first level 
         InitGame();
     }
-    
-    void Update() {
+
+    private void monsterSpawning() {
+        if(killedMonsters>=10) MonsterSpawner.generateMonsterOnPlanetSurface(true);
+        else MonsterSpawner.generateMonsterOnPlanetSurface(false);
+    }
+
+    private void munitionSpawning() {
+        MunitionSpawner.generateMunitionOnPlanetSurface();
+    }
+
+    void Start() {
 
     }
+    
+    void Update() {
+        
+    }
     void InitGame() {
-        EntitySpawner EntitySpawner = FindObjectOfType<EntitySpawner>();
-
-        if (EntitySpawner != null) {
-            Vector3 randomPoint = EntitySpawner.getRandomPointOnPlanetSurface();
-        }
-
+        
     }
 }

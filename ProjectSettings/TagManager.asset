@@ -7,9 +7,10 @@ TagManager:
   - Character
   - Planet
   - Monster
-  - Munition
   - Explotion
   - Mine
+  - Boss
+  - Munition
   layers:
   - Default
   - TransparentFX

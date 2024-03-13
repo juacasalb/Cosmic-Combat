@@ -4,6 +4,8 @@ using UnityEngine;
 public class Character : MonoBehaviour {
 
     public GameObject circlePrefab;
+    public GameObject weaponSet;
+    private int isFirstMinePlaced;
     private List<GameObject> circles;
     private float speed;
     private bool isAlive;
@@ -88,7 +90,7 @@ public class Character : MonoBehaviour {
     }
 
     private void shootMissile() {
-        Missile missile = transform.Find("Missile").GetComponent<Missile>();
+        Missile missile = weaponSet.transform.Find("Missile").GetComponent<Missile>();
         Vector3 actualPosition = transform.position;
         Vector3 mousePosition = clickCoordinates(actualPosition);
         Vector3 normalizedPosition = mousePosition.normalized;
@@ -101,12 +103,12 @@ public class Character : MonoBehaviour {
     }
 
     private void useLightsaber() {
-        Lightsaber lightsaber = transform.Find("Lightsaber").GetComponent<Lightsaber>();
+        Lightsaber lightsaber = weaponSet.transform.Find("Lightsaber").GetComponent<Lightsaber>();
         lightsaber.gameObject.SetActive(true);
     }
 
     private void shootLaserRay() {
-        LaserRay laserRay = transform.Find("LaserRay").GetComponent<LaserRay>();
+        LaserRay laserRay = weaponSet.transform.Find("LaserRay").GetComponent<LaserRay>();
         string name = gameObject.name;
 
         Vector3 actualPosition = transform.position;
@@ -126,17 +128,19 @@ public class Character : MonoBehaviour {
     }
 
     private void placeMine() {
-        Mine mine = GameObject.FindWithTag("Mine").GetComponent<Mine>();
-
+        List<Transform> mines = new List<Transform>{weaponSet.transform.Find("Mine1"), weaponSet.transform.Find("Mine2")};
         Vector3 actualPosition = transform.position;
         Vector3 mousePosition = clickCoordinates(actualPosition);
         Vector3 placePosition = Vector3.zero;
         placePosition.x = mousePosition.x >= 0.0f ? 1.0f : -1.0f;
         placePosition.y = mousePosition.y >= 0.0f ? 1.0f : -1.0f;
 
-        mine.gameObject.transform.position = new Vector3(
+        mines[isFirstMinePlaced].transform.position = new Vector3(
             actualPosition.x + placePosition.x, 
             actualPosition.y + placePosition.y);
+        mines[isFirstMinePlaced].gameObject.SetActive(true);
+
+        isFirstMinePlaced = isFirstMinePlaced==0 ? 1 : 0;
         
     }
 
@@ -172,7 +176,7 @@ public class Character : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Munition")) {
+        if (other.gameObject.GetComponent<Munition>() != null) {
             addAmmo(other);
         }
     }
@@ -211,6 +215,7 @@ public class Character : MonoBehaviour {
                     ammo[2]+=3;
                     break;
             }
+            other.gameObject.GetComponent<Munition>().deactivate();
         }
     }
 
@@ -231,13 +236,15 @@ public class Character : MonoBehaviour {
 
     private void Start() {
         speed = 0.35f;
-        instantiateShoot();
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
-        ammo = new List<int> {5, 5, 5};
-        fullHealth();
+        ammo = new List<int> {8, 8, 8};
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        isFirstMinePlaced = 0;
+
+        instantiateShoot();
+        fullHealth();
         createDots();
         activateDots();
     }

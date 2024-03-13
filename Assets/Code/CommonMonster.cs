@@ -5,9 +5,11 @@ public class CommonMonster : Monster {
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private Rigidbody2D rb2d;
 
     void Start() {
         fullHealth();
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
@@ -33,13 +35,22 @@ public class CommonMonster : Monster {
 
     public override void fullHealth() {
         healthPoints=100;
-        isAlive=true;
+    }
+
+    public override void activate(Vector3 position) {
+        gameObject.transform.position = position;
+        rb2d.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    public override void deactivate() {
+        GameManager.instance.killedMonsters++;
+        gameObject.transform.position = basePosition;
+        rb2d.bodyType = RigidbodyType2D.Static;
     }
 
     void Update() {
         if(healthPoints<=0) {
-            isAlive = false;
-            gameObject.SetActive(false);
+            deactivate();
         }
     }
 

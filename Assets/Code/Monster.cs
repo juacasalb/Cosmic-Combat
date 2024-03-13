@@ -9,8 +9,8 @@ public class Monster : MonoBehaviour {
         Imp
     };
 
+    protected Vector3 basePosition = new Vector3(20f,5f,0f);
     protected float speed;
-    protected bool isAlive;
     protected int healthPoints;
 
     protected void movement(Vector3 direction) {
@@ -27,6 +27,14 @@ public class Monster : MonoBehaviour {
 
     public virtual void fullHealth() {
         
+    }
+
+    public virtual void activate(Vector3 position) {
+        
+    }
+
+    public virtual void deactivate() {
+
     }
 
     void Update() {
