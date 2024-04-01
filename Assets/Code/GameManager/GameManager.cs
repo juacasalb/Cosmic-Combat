@@ -28,7 +28,10 @@ public class GameManager : MonoBehaviour {
     }
 
     private void monsterSpawning() {
-        if(killedMonsters>=10) MonsterSpawner.generateMonsterOnPlanetSurface(true);
+        if(killedMonsters>=10) {
+            MonsterSpawner.generateMonsterOnPlanetSurface(true);
+            killedMonsters = int.MinValue;
+        }
         else MonsterSpawner.generateMonsterOnPlanetSurface(false);
     }
 
@@ -37,7 +40,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void Start() {
-
+        killedMonsters = 0;
     }
     
     void Update() {

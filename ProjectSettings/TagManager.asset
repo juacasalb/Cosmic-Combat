@@ -9,8 +9,8 @@ TagManager:
   - Monster
   - Explotion
   - Mine
-  - Boss
   - Munition
+  - Boss
   layers:
   - Default
   - TransparentFX

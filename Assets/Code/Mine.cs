@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Mine : Weapon {
 
-    private Vector3 basePosition = new Vector3();
-
     void Start() {
         damage = 100;
     }

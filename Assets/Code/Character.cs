@@ -5,6 +5,7 @@ public class Character : MonoBehaviour {
 
     public GameObject circlePrefab;
     public GameObject weaponSet;
+    public bool isMyTurn;
     private int isFirstMinePlaced;
     private List<GameObject> circles;
     private float speed;
@@ -46,6 +47,7 @@ public class Character : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0) && canShoot) {
             shoot();
+            isMyTurn = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
@@ -236,6 +238,7 @@ public class Character : MonoBehaviour {
 
     private void Start() {
         speed = 0.35f;
+        isMyTurn = false;
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
         ammo = new List<int> {8, 8, 8};
@@ -250,19 +253,19 @@ public class Character : MonoBehaviour {
     }
 
     private void Update() {
-        if (!inShootMode)
-            handleWanderMode();
-        else
-            handleShootMode();
-
+        if(isMyTurn) {
+            if (!inShootMode)
+                handleWanderMode();
+            else
+                handleShootMode();
+            if(inShootMode)
+                setDotsOnScreen();
+        }
+        
         if(healthPoints<=0) {
             isAlive=false;
             gameObject.SetActive(false);
         }
-
-        if(inShootMode)
-            setDotsOnScreen();
-
         setShotCooldown();
     }
 }

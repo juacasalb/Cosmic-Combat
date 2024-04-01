@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5046827615720029414}
   - component: {fileID: 5321957548831008061}
   - component: {fileID: 2175439838408884397}
-  - component: {fileID: 6660911412328970013}
+  - component: {fileID: 9215983114859347527}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e752c92f8edfd43b86ba8c0d99b648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6660911412328970013
+--- !u!114 &9215983114859347527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,6 +203,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3589527151865229795}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cfb9223e552543459f2c1e27abb3419, type: 3}
+  m_Script: {fileID: 11500000, guid: f947123eac8c72342bcae748ff3f68c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
