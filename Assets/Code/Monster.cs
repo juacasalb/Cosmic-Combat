@@ -13,8 +13,8 @@ public class Monster : MonoBehaviour {
     protected float speed;
     protected int healthPoints;
 
-    protected void movement(Vector3 direction) {
-        transform.Translate(direction * speed * Time.deltaTime);
+    protected virtual void movement(Vector3 direction) {
+        
     }
 
     protected virtual void shoot() {

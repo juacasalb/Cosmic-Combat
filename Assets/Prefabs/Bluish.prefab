@@ -111,7 +111,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6707077046636024954}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -195,6 +195,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circlePrefab: {fileID: 2752153389428339131, guid: 950abdf74cb63024eb87de1bdeeaba94, type: 3}
+  weaponSet: {fileID: 0}
+  isMyTurn: 0
 --- !u!114 &6822348978825198439
 MonoBehaviour:
   m_ObjectHideFlags: 0

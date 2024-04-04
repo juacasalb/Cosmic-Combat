@@ -22,6 +22,14 @@ public class ShiftSystem : MonoBehaviour {
         return planet.getMobiles();
     }
 
+    public void discardMobiles() {
+        planet.discardMobiles(ref shiftCounter);
+    }
+
+    public void resetMobility() {
+        planet.resetMobility();
+    }
+
     private void calculateTurn() {
         mobiles = findMobilesEntities();
 
@@ -47,10 +55,12 @@ public class ShiftSystem : MonoBehaviour {
     public void shiftController() {
         shiftTimer -= Time.deltaTime;
         if(shiftTimer <= 0f) {
+            discardMobiles();
+            resetMobility();
             calculateTurn();
             shiftCounter++;
             shiftCounter = shiftCounter % mobiles.Count;
-            shiftTimer = 40f;
+            shiftTimer = 10f;
         }
     }
 

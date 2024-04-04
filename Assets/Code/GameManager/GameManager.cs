@@ -39,6 +39,10 @@ public class GameManager : MonoBehaviour {
         MunitionSpawner.generateMunitionOnPlanetSurface();
     }
 
+    private void characterSpawning() {
+        CharacterSpawner.generateCharacterOnPlanetSurface();
+    }
+
     void Start() {
         killedMonsters = 0;
     }

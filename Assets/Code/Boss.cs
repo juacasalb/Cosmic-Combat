@@ -10,6 +10,11 @@ public class Boss : Monster {
     private Animator animator;
     private bool isAlive;
     private Rigidbody2D rb2d;
+    private int xDirection;
+    private Vector3 direction;
+    protected override void movement(Vector3 direction) { 
+        transform.Translate(direction * speed * Time.deltaTime);
+    }
 
     private Vector3 getAnyCharacterPosition(Vector3 actualPosition) {
         Vector3 failedShotPosition = new Vector3(UnityEngine.Random.Range(-1f, 1f),
@@ -24,8 +29,9 @@ public class Boss : Monster {
         }
 
         int positionInList = (int)UnityEngine.Random.Range(0,characterPositions.Count);
+        Vector3 finalPosition = characterPositions[positionInList] - actualPosition;
 
-        return characterPositions[positionInList] - actualPosition;
+        return finalPosition;
 
     }
 
@@ -49,26 +55,16 @@ public class Boss : Monster {
         laserRay.shooterName = name;
     }
 
-    protected void move() {
-        float xDirection = 1-(2*UnityEngine.Random.value);
-        Vector3 direction = new Vector3(xDirection,0f,0f);
-        while(movementTimer >= 0f) {
-            movement(direction);
-            movementTimer -= Time.deltaTime;
-        }
-        movementTimer = 10f;
-    }
-
     public override void looseHealthPoints(int damage) {
         healthPoints-=(damage-10);
     }
 
     public override void fullHealth() {
         healthPoints=200;
-        isAlive=true;
     }
 
     public override void activate(Vector3 position) {
+        isAlive=true;
         gameObject.transform.position = position;
         rb2d.bodyType = RigidbodyType2D.Dynamic;
     }
@@ -79,8 +75,20 @@ public class Boss : Monster {
         rb2d.bodyType = RigidbodyType2D.Static;
     }
 
+    private void calculateNextDirection() {
+        xDirection = (UnityEngine.Random.Range(0,2) * 2) - 1;
+        direction = new Vector3(xDirection,0f,0f);
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
     void Start() {
         fullHealth();
+        calculateNextDirection();
+        movementTimer = 5f;
+        speed = 0.45f;
         areaOfEffect = 15f;
         isMyTurn = false;
         rb2d = gameObject.GetComponent<Rigidbody2D>();
@@ -92,13 +100,22 @@ public class Boss : Monster {
         if(healthPoints<=0) {
             deactivate();
         }
-        if(isMyTurn) {
-            movementTimer = 10f;
-            move();
-            shoot();
-            isMyTurn=false;
+
+        if (xDirection==0) {
+            calculateNextDirection();
         }
 
+        if(isMyTurn) {
+            if(movementTimer >= 0f) {
+                movement(direction);
+                movementTimer -= Time.deltaTime;
+            } else {
+                shoot();
+                movementTimer = 5f;
+                xDirection=0;
+                isMyTurn=false;
+            }
+        }
     }
 
 }

@@ -14,15 +14,15 @@ public class Character : MonoBehaviour {
     private bool inShootMode;
     private bool canShoot;
     private float shotCooldown;
+    private Rigidbody2D rb2d;
     private List<int> ammo;
     private WeaponType currentWeapon;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private Vector3 basePosition = new Vector3(30f,0f,0f);
 
     private void handleWanderMode() {
-        foreach(var circle in circles) {
-            circle.SetActive(false);
-        }
+        setDots(false);
         float horizontalInput = Input.GetAxis("Horizontal");
 
         if(horizontalInput==0) {
@@ -76,7 +76,7 @@ public class Character : MonoBehaviour {
 
     private void setDotsOnScreen() {
 
-        activateDots();
+        setDots(true);
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0.0f;
 
@@ -190,7 +190,7 @@ public class Character : MonoBehaviour {
 
     private void instantiateShoot() {
         canShoot=true;
-        shotCooldown=2f; //10f
+        shotCooldown=10f;
     }
 
     private void setShotCooldown() {
@@ -221,9 +221,9 @@ public class Character : MonoBehaviour {
         }
     }
 
-    void activateDots() {
+    void setDots(bool isActive) {
         foreach(var circle in circles) {
-            circle.SetActive(true);
+            circle.SetActive(isActive);
         }
     }
 
@@ -236,35 +236,51 @@ public class Character : MonoBehaviour {
         }
     }
 
+    public void activate(Vector3 position) {
+        isAlive = true;
+        gameObject.transform.position = position;
+        rb2d.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    public void deactivate() {
+        isAlive = false;
+        gameObject.transform.position = basePosition;
+        rb2d.bodyType = RigidbodyType2D.Static;
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
     private void Start() {
         speed = 0.35f;
         isMyTurn = false;
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
-        ammo = new List<int> {8, 8, 8};
+        ammo = new List<int> {0, 0, 0};
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        isFirstMinePlaced = 0;
+        isFirstMinePlaced = 0; 
 
         instantiateShoot();
         fullHealth();
         createDots();
-        activateDots();
+        setDots(true);
     }
 
     private void Update() {
+        if(healthPoints<=0) {
+            deactivate();
+        }
+
         if(isMyTurn) {
             if (!inShootMode)
                 handleWanderMode();
             else
                 handleShootMode();
-            if(inShootMode)
+            if(inShootMode || !isMyTurn)
                 setDotsOnScreen();
-        }
-        
-        if(healthPoints<=0) {
-            isAlive=false;
-            gameObject.SetActive(false);
         }
         setShotCooldown();
     }

@@ -13,10 +13,9 @@ public class Planet : MonoBehaviour {
     }
 
     public void deleteMobile(GameObject mobile) {
-        string mobileName = mobile.name;
-        foreach(GameObject child in transform) {
-            if(child.name==mobileName)
-                child.transform.SetParent(null);
+        for(int i = 0; i<transform.childCount;i++) {
+            if(transform.GetChild(i).gameObject.name==mobile.name)
+                transform.GetChild(i).transform.SetParent(null);
         }
     }
 
@@ -26,6 +25,24 @@ public class Planet : MonoBehaviour {
             rb2d.bodyType = RigidbodyType2D.Static;
             rb2d.bodyType = RigidbodyType2D.Dynamic;
         }
+    }
+
+    public void discardMobiles(ref int shiftCounter) {
+        for(int i = 0; i<transform.childCount;i++) {
+            Character character = transform.GetChild(i).GetComponent<Character>();
+            CommonMonster commonMonster = transform.GetChild(i).GetComponent<CommonMonster>();
+            Boss boss = transform.GetChild(i).GetComponent<Boss>();
+
+            bool noHealth = (character!=null && character.getHealthPoints() <= 0) ||
+                      (commonMonster!=null && commonMonster.getHealthPoints() <= 0) ||
+                      (boss!=null && boss.getHealthPoints() <= 0);
+
+            if(noHealth) {
+                deleteMobile(transform.GetChild(i).gameObject);
+                shiftCounter--;
+            }
+        }
+        if (shiftCounter<0) shiftCounter = 0;
     }
 
     void choosePlanetTexture(PlanetType texture) {

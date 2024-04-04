@@ -8,6 +8,12 @@ public class CommonMonster : Monster {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Rigidbody2D rb2d;
+    private int xDirection;
+    private Vector3 direction;
+
+    protected override void movement(Vector3 direction) { 
+        transform.Translate(direction * speed * Time.deltaTime);
+    }
 
     protected override void shoot() {
         Missile missile = transform.Find("Missile").GetComponent<Missile>();
@@ -21,16 +27,6 @@ public class CommonMonster : Monster {
 
         missile.gameObject.SetActive(true);
         missile._direction = angleOfShoot;
-    }
-
-    protected void move() {
-        float xDirection = 1-(2*UnityEngine.Random.value);
-        Vector3 direction = new Vector3(xDirection,0f,0f);
-        while(movementTimer >= 0f) {
-            movement(direction);
-            movementTimer-= Time.deltaTime;
-        }
-        movementTimer = 10f;
     }
 
     public override void looseHealthPoints(int damage) {
@@ -52,8 +48,20 @@ public class CommonMonster : Monster {
         rb2d.bodyType = RigidbodyType2D.Static;
     }
 
+    private void calculateNextDirection() {
+        xDirection = (UnityEngine.Random.Range(0,2) * 2) - 1;
+        direction = new Vector3(xDirection,0f,0f);
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
     void Start() {
         fullHealth();
+        calculateNextDirection();
+        movementTimer = 5f;
+        speed = 0.45f;
         isMyTurn = false;
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -64,11 +72,21 @@ public class CommonMonster : Monster {
         if(healthPoints<=0) {
             deactivate();
         }
+
+        if (xDirection==0) {
+            calculateNextDirection();
+        }
+
         if(isMyTurn) {
-            movementTimer = 10f;
-            move();
-            shoot();
-            isMyTurn=false;
+            if(movementTimer >= 0f) {
+                movement(direction);
+                movementTimer -= Time.deltaTime;
+            } else {
+                shoot();
+                movementTimer = 2f;
+                xDirection=0;
+                isMyTurn=false;
+            }
         }
     }
 
