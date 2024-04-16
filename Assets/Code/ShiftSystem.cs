@@ -49,7 +49,7 @@ public class ShiftSystem : MonoBehaviour {
         if(mobiles[shiftCounter].gameObject.GetComponent<Character>()!=null)
             mobiles[shiftCounter].gameObject.GetComponent<Character>().isMyTurn = true;
 
-        Debug.Log("Es turno de:"+mobiles[shiftCounter].gameObject.name);
+        Debug.Log("Es turno de:"+mobiles[shiftCounter].gameObject.name); //
     }
 
     public void shiftController() {

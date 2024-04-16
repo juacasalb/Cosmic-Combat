@@ -64,13 +64,13 @@ public class Boss : Monster {
     }
 
     public override void activate(Vector3 position) {
-        isAlive=true;
         gameObject.transform.position = position;
         rb2d.bodyType = RigidbodyType2D.Dynamic;
     }
 
     public override void deactivate() {
         isAlive = false;
+        GameManager.instance.isBossDefeated = true;
         gameObject.transform.position = basePosition;
         rb2d.bodyType = RigidbodyType2D.Static;
     }
@@ -87,6 +87,7 @@ public class Boss : Monster {
     void Start() {
         fullHealth();
         calculateNextDirection();
+        isAlive = true;
         movementTimer = 5f;
         speed = 0.45f;
         areaOfEffect = 15f;
@@ -97,7 +98,7 @@ public class Boss : Monster {
     }
 
     void Update() {
-        if(healthPoints<=0) {
+        if(healthPoints<=0 && isAlive) {
             deactivate();
         }
 

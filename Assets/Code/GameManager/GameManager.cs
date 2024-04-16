@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
-
+    public bool isGameFinished;
+    public bool isBossDefeated;
     public int killedMonsters;
 
     void Awake(){
@@ -43,13 +44,27 @@ public class GameManager : MonoBehaviour {
         CharacterSpawner.generateCharacterOnPlanetSurface();
     }
 
+    private void rocketSpawning() {
+        Rocket.generateRocketOnPlanetSurface();
+    }
+
     void Start() {
         killedMonsters = 0;
+        isBossDefeated = false;
+        isGameFinished = false;
     }
     
     void Update() {
-        
+        if(isBossDefeated) {
+            rocketSpawning();
+            isBossDefeated = false;
+        }
+        if(isGameFinished) {
+            Debug.Log("You win!"); //
+            isGameFinished = false;
+        }
     }
+
     void InitGame() {
         
     }

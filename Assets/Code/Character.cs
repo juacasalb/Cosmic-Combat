@@ -281,6 +281,8 @@ public class Character : MonoBehaviour {
                 handleShootMode();
             if(inShootMode || !isMyTurn)
                 setDotsOnScreen();
+        } else {
+            setDots(false);
         }
         setShotCooldown();
     }
