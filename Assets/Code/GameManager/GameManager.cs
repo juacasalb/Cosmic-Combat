@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     public bool isGameFinished;
     public bool isBossDefeated;
     public int killedMonsters;
+    private List<string> charactersInGame;
 
     void Awake(){
         //Check if instance already exists
@@ -28,7 +29,20 @@ public class GameManager : MonoBehaviour {
         InitGame();
     }
 
-    private void monsterSpawning() {
+    private void putCharactersOnPlanet() {
+        List<GameObject> list = new List<GameObject>();
+        foreach(string name in charactersInGame) {
+            list.Add(GameObject.Find(name));
+            characterSpawning(GameObject.Find(name));
+        }
+        ShiftSystem.assignMobiles(list);
+    }
+
+    public void characterSpawning(GameObject character) {
+        CharacterSpawner.generateCharacterOnPlanetSurface(character);
+    }
+
+    public void monsterSpawning() {
         if(killedMonsters>=10) {
             MonsterSpawner.generateMonsterOnPlanetSurface(true);
             killedMonsters = int.MinValue;
@@ -36,15 +50,11 @@ public class GameManager : MonoBehaviour {
         else MonsterSpawner.generateMonsterOnPlanetSurface(false);
     }
 
-    private void munitionSpawning() {
+    public void munitionSpawning() {
         MunitionSpawner.generateMunitionOnPlanetSurface();
     }
 
-    private void characterSpawning() {
-        CharacterSpawner.generateCharacterOnPlanetSurface();
-    }
-
-    private void rocketSpawning() {
+    public void rocketSpawning() {
         Rocket.generateRocketOnPlanetSurface();
     }
 
@@ -66,6 +76,9 @@ public class GameManager : MonoBehaviour {
     }
 
     void InitGame() {
-        
+        string name1 = "Demon1";
+        string name2 = "Demon2";
+        charactersInGame = new List<string>{ name1, name2 };
+        putCharactersOnPlanet();
     }
 }

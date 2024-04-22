@@ -5,7 +5,9 @@ using UnityEngine;
 public class ShiftSystem : MonoBehaviour {
 
     private int shiftCounter;
+    public int totalShifts;
     private static Planet planet;
+    private static GameObject planetGameObject;
     private List<Transform> mobiles;
     public static float shiftTimer;
 
@@ -14,8 +16,12 @@ public class ShiftSystem : MonoBehaviour {
     }
 
     public static void assignMobiles(List<GameObject> list) {
-        foreach(GameObject child in list)
-            child.transform.SetParent(planet.transform);
+        getPlanet();
+        foreach(GameObject child in list) {
+            if (planet != null && child != null) child.transform.SetParent(planet.transform);
+            else Debug.Log(planet == null);
+            
+        }
     }
 
     public static List<Transform> findMobilesEntities() {
@@ -28,6 +34,14 @@ public class ShiftSystem : MonoBehaviour {
 
     public void resetMobility() {
         planet.resetMobility();
+    }
+
+    private void checkSpawning() {
+        if (totalShifts % 5 == 1) {
+            GameManager.instance.monsterSpawning();
+            GameManager.instance.munitionSpawning();
+            GameManager.instance.munitionSpawning();
+        }
     }
 
     private void calculateTurn() {
@@ -58,16 +72,26 @@ public class ShiftSystem : MonoBehaviour {
             discardMobiles();
             resetMobility();
             calculateTurn();
+            checkSpawning();
             shiftCounter++;
+            totalShifts++;
             shiftCounter = shiftCounter % mobiles.Count;
             shiftTimer = 10f;
         }
     }
 
+    private static void getPlanet() {
+        planet = GameObject.Find("Planet").GetComponent<Planet>();
+    }
+
+    void Awake() {
+        planet = GameObject.Find("Planet").GetComponent<Planet>();
+    }
+
     void Start() {
         shiftCounter = 0;
+        totalShifts = 1;
         shiftTimer = 0f;
-        planet = GameObject.Find("Planet").GetComponent<Planet>();
     }
 
     void Update() {

@@ -38,13 +38,16 @@ public class CommonMonster : Monster {
     }
 
     public override void activate(Vector3 position) {
+        ShiftSystem.assignMobiles(new List<GameObject>{gameObject});
         gameObject.transform.position = position;
+        getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Dynamic;
     }
 
     public override void deactivate() {
         GameManager.instance.killedMonsters++;
         gameObject.transform.position = basePosition;
+        getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Static;
     }
 
@@ -57,13 +60,17 @@ public class CommonMonster : Monster {
         return healthPoints;
     }
 
+    private void getRigidBody2D() {
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
+    }
+
     void Start() {
         fullHealth();
         calculateNextDirection();
         movementTimer = 5f;
         speed = 0.45f;
         isMyTurn = false;
-        rb2d = gameObject.GetComponent<Rigidbody2D>();
+        getRigidBody2D();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }

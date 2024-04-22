@@ -239,17 +239,23 @@ public class Character : MonoBehaviour {
     public void activate(Vector3 position) {
         isAlive = true;
         gameObject.transform.position = position;
+        getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Dynamic;
     }
 
     public void deactivate() {
         isAlive = false;
         gameObject.transform.position = basePosition;
+        getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Static;
     }
 
     public int getHealthPoints() {
         return healthPoints;
+    }
+
+    private void getRigidBody2D() {
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
     }
 
     private void Start() {
@@ -258,7 +264,7 @@ public class Character : MonoBehaviour {
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
         ammo = new List<int> {0, 0, 0};
-        rb2d = gameObject.GetComponent<Rigidbody2D>();
+        getRigidBody2D();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         isFirstMinePlaced = 0; 

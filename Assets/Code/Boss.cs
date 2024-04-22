@@ -64,7 +64,9 @@ public class Boss : Monster {
     }
 
     public override void activate(Vector3 position) {
+        ShiftSystem.assignMobiles(new List<GameObject>{gameObject});
         gameObject.transform.position = position;
+        getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Dynamic;
     }
 
@@ -72,6 +74,7 @@ public class Boss : Monster {
         isAlive = false;
         GameManager.instance.isBossDefeated = true;
         gameObject.transform.position = basePosition;
+        getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Static;
     }
 
@@ -84,6 +87,10 @@ public class Boss : Monster {
         return healthPoints;
     }
 
+    private void getRigidBody2D() {
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
+    }
+
     void Start() {
         fullHealth();
         calculateNextDirection();
@@ -92,7 +99,7 @@ public class Boss : Monster {
         speed = 0.45f;
         areaOfEffect = 15f;
         isMyTurn = false;
-        rb2d = gameObject.GetComponent<Rigidbody2D>();
+        getRigidBody2D();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
