@@ -46,9 +46,11 @@ public class CommonMonster : Monster {
 
     public override void deactivate() {
         GameManager.instance.killedMonsters++;
+        ShiftSystem.distributeScoreToCharacters(10);
         gameObject.transform.position = basePosition;
         getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Static;
+        Planet.deleteMobile(gameObject);
     }
 
     private void calculateNextDirection() {
@@ -78,6 +80,7 @@ public class CommonMonster : Monster {
     void Update() {
         if(healthPoints<=0) {
             deactivate();
+            fullHealth();
         }
 
         if (xDirection==0) {

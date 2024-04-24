@@ -6,10 +6,11 @@ public class Character : MonoBehaviour {
     public GameObject circlePrefab;
     public GameObject weaponSet;
     public bool isMyTurn;
+    private bool isAITurn;
     private int isFirstMinePlaced;
     private List<GameObject> circles;
     private float speed;
-    private bool isAlive;
+    public bool isAlive;
     private int healthPoints;
     private bool inShootMode;
     private bool canShoot;
@@ -20,6 +21,10 @@ public class Character : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Vector3 basePosition = new Vector3(30f,0f,0f);
+    private int characterNumber;
+    private int xDirection;
+    private float movementIATimer;
+    private Vector3 directionIA;
 
     private void handleWanderMode() {
         setDots(false);
@@ -91,10 +96,17 @@ public class Character : MonoBehaviour {
         
     }
 
-    private void shootMissile() {
+    private void shootMissile(bool isShotByIACharacter) {
         Missile missile = weaponSet.transform.Find("Missile").GetComponent<Missile>();
         Vector3 actualPosition = transform.position;
-        Vector3 mousePosition = clickCoordinates(actualPosition);
+        Vector3 mousePosition;
+        if (isShotByIACharacter) {
+            float randomX = UnityEngine.Random.Range(-1f, 1f);
+            float randomY = UnityEngine.Random.Range(-1f, 1f);
+            mousePosition = new Vector3(randomX, randomY, 0);
+        }
+        else mousePosition = clickCoordinates(actualPosition);
+        
         Vector3 normalizedPosition = mousePosition.normalized;
 
         missile.gameObject.transform.position = new Vector3(actualPosition.x + normalizedPosition.x, 
@@ -106,6 +118,13 @@ public class Character : MonoBehaviour {
 
     private void useLightsaber() {
         Lightsaber lightsaber = weaponSet.transform.Find("Lightsaber").GetComponent<Lightsaber>();
+        Vector3 actualPosition = transform.position;
+        Vector3 mousePosition = clickCoordinates(actualPosition);
+        Vector3 normalizedPosition = mousePosition.normalized;
+
+        lightsaber.gameObject.transform.position = new Vector3(actualPosition.x + (normalizedPosition.x*0.5f), 
+            actualPosition.y + (normalizedPosition.y*0.5f));
+
         lightsaber.gameObject.SetActive(true);
     }
 
@@ -150,7 +169,7 @@ public class Character : MonoBehaviour {
         this.canShoot = false;
         switch (currentWeapon) {
             case WeaponType.Missile:
-                shootMissile();
+                shootMissile(false);
                 break;
             case WeaponType.LaserRay:
                 if(ammo[0]>0) {
@@ -171,6 +190,7 @@ public class Character : MonoBehaviour {
                 }
                 break;
         }
+        handleWanderMode();
     }
 
     public void looseHealthPoints(int damage) {
@@ -221,6 +241,17 @@ public class Character : MonoBehaviour {
         }
     }
 
+    private void actionByIA() {
+        if (movementIATimer >= 0.0f) {
+            transform.Translate(directionIA * speed * Time.deltaTime);
+        } else {
+            shootMissile(true);
+            isMyTurn = false;
+            movementIATimer = 5f;
+            xDirection = 0;
+        }
+    }
+
     void setDots(bool isActive) {
         foreach(var circle in circles) {
             circle.SetActive(isActive);
@@ -236,6 +267,15 @@ public class Character : MonoBehaviour {
         }
     }
 
+    private void obtainNumberInName() {
+        string name = gameObject.name;
+        characterNumber = (int)name[name.Length - 1] - '0';
+    }
+
+    private void decreaseLifes() {
+        ShiftSystem.lifes[characterNumber-1]--;
+    }
+
     public void activate(Vector3 position) {
         isAlive = true;
         gameObject.transform.position = position;
@@ -244,10 +284,13 @@ public class Character : MonoBehaviour {
     }
 
     public void deactivate() {
+        decreaseLifes();
+        handleWanderMode();
         isAlive = false;
         gameObject.transform.position = basePosition;
         getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Static;
+        Planet.deleteMobile(gameObject);
     }
 
     public int getHealthPoints() {
@@ -263,12 +306,15 @@ public class Character : MonoBehaviour {
         isMyTurn = false;
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
-        ammo = new List<int> {0, 0, 0};
+        ammo = new List<int> {5, 5, 5}; //
         getRigidBody2D();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         isFirstMinePlaced = 0; 
+        xDirection = 0;
+        movementIATimer = 5f;
 
+        obtainNumberInName();
         instantiateShoot();
         fullHealth();
         createDots();
@@ -278,15 +324,26 @@ public class Character : MonoBehaviour {
     private void Update() {
         if(healthPoints<=0) {
             deactivate();
+            fullHealth();
+        }
+
+        if(xDirection==0) {
+            xDirection = (UnityEngine.Random.Range(0,2) * 2) - 1;
+            directionIA = new Vector3(xDirection,0f,0f);
         }
 
         if(isMyTurn) {
-            if (!inShootMode)
-                handleWanderMode();
-            else
-                handleShootMode();
-            if(inShootMode || !isMyTurn)
-                setDotsOnScreen();
+            movementIATimer -= Time.deltaTime;
+            if(ShiftSystem.isCooperative || (!ShiftSystem.isCooperative && characterNumber==1)) {
+                if (!inShootMode)
+                    handleWanderMode();
+                else
+                    handleShootMode();
+                if(inShootMode || !isMyTurn)
+                    setDotsOnScreen();
+            } else if (!ShiftSystem.isCooperative && characterNumber>1) {
+                actionByIA();
+            }
         } else {
             setDots(false);
         }

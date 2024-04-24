@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+
+    public static int playerScores;
     public static GameManager instance = null;
     public bool isGameFinished;
     public bool isBossDefeated;
@@ -10,6 +12,8 @@ public class GameManager : MonoBehaviour {
     private List<string> charactersInGame;
 
     void Awake(){
+        //First of all, set player points
+        playerScores = 0;
         //Check if instance already exists
         if (instance == null)
             
@@ -78,7 +82,8 @@ public class GameManager : MonoBehaviour {
     void InitGame() {
         string name1 = "Demon1";
         string name2 = "Demon2";
-        charactersInGame = new List<string>{ name1, name2 };
+        string name3 = "Demon3";
+        charactersInGame = new List<string>{ name1, name2, name3 };
         putCharactersOnPlanet();
     }
 }

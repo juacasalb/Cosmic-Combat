@@ -1,26 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShiftSystem : MonoBehaviour {
 
+    public static bool isCooperative;
+    public static List<int> lifes;
+    private static List<int> scores;
     private int shiftCounter;
     public int totalShifts;
     private static Planet planet;
     private static GameObject planetGameObject;
     private List<Transform> mobiles;
     public static float shiftTimer;
-
-    public static void deleteMobile(GameObject mobile) {
-        planet.deleteMobile(mobile);
-    }
+    private static GameObject entityOnCurrentTurn;
 
     public static void assignMobiles(List<GameObject> list) {
         getPlanet();
         foreach(GameObject child in list) {
-            if (planet != null && child != null) child.transform.SetParent(planet.transform);
-            else Debug.Log(planet == null);
-            
+            if (planet != null && child != null) child.transform.SetParent(planet.transform);        
         }
     }
 
@@ -28,12 +27,11 @@ public class ShiftSystem : MonoBehaviour {
         return planet.getMobiles();
     }
 
-    public void discardMobiles() {
-        planet.discardMobiles(ref shiftCounter);
-    }
-
     public void resetMobility() {
         planet.resetMobility();
+    }
+    private void gameOver() {
+        Debug.Log("Game Over!");
     }
 
     private void checkSpawning() {
@@ -42,6 +40,19 @@ public class ShiftSystem : MonoBehaviour {
             GameManager.instance.munitionSpawning();
             GameManager.instance.munitionSpawning();
         }
+    }
+
+    private static void distributeToSingleCharacter(int score) {
+        string name = entityOnCurrentTurn.name;
+        int characterNumber = name[name.Length - 1] - '0';
+        if(characterNumber != 67) scores[characterNumber-1]+=score;
+        else scores[0]+=score;
+        
+    }
+
+    public static void distributeScoreToCharacters(int score) {
+        if(isCooperative) scores[0]+=score;
+        else distributeToSingleCharacter(score);
     }
 
     private void calculateTurn() {
@@ -60,8 +71,18 @@ public class ShiftSystem : MonoBehaviour {
             mobiles[shiftCounter].gameObject.GetComponent<CommonMonster>().isMyTurn = true;
         if(mobiles[shiftCounter].gameObject.GetComponent<Boss>()!=null)
             mobiles[shiftCounter].gameObject.GetComponent<Boss>().isMyTurn = true;
-        if(mobiles[shiftCounter].gameObject.GetComponent<Character>()!=null)
+        if(mobiles[shiftCounter].gameObject.GetComponent<Character>()!=null) {
+            if(mobiles[shiftCounter].gameObject.GetComponent<Character>().isAlive==false)
+                CharacterSpawner.generateCharacterOnPlanetSurface(mobiles[shiftCounter].gameObject);
             mobiles[shiftCounter].gameObject.GetComponent<Character>().isMyTurn = true;
+        }
+            
+
+        if(lifes[0] <= 0 || lifes.Sum() <= 0) {
+            gameOver();
+        }
+
+        entityOnCurrentTurn = mobiles[shiftCounter].gameObject;
 
         Debug.Log("Es turno de:"+mobiles[shiftCounter].gameObject.name); //
     }
@@ -69,7 +90,6 @@ public class ShiftSystem : MonoBehaviour {
     public void shiftController() {
         shiftTimer -= Time.deltaTime;
         if(shiftTimer <= 0f) {
-            discardMobiles();
             resetMobility();
             calculateTurn();
             checkSpawning();
@@ -85,13 +105,16 @@ public class ShiftSystem : MonoBehaviour {
     }
 
     void Awake() {
-        planet = GameObject.Find("Planet").GetComponent<Planet>();
+        getPlanet();
     }
 
     void Start() {
+        isCooperative = true;
         shiftCounter = 0;
         totalShifts = 1;
         shiftTimer = 0f;
+        lifes = new List<int>{3,3,3};
+        scores = new List<int>{0,0,0};
     }
 
     void Update() {

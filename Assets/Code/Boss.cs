@@ -72,10 +72,12 @@ public class Boss : Monster {
 
     public override void deactivate() {
         isAlive = false;
+        ShiftSystem.distributeScoreToCharacters(150);
         GameManager.instance.isBossDefeated = true;
         gameObject.transform.position = basePosition;
         getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Static;
+        Planet.deleteMobile(gameObject);
     }
 
     private void calculateNextDirection() {
@@ -107,6 +109,7 @@ public class Boss : Monster {
     void Update() {
         if(healthPoints<=0 && isAlive) {
             deactivate();
+            fullHealth();
         }
 
         if (xDirection==0) {

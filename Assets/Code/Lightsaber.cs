@@ -7,7 +7,7 @@ public class Lightsaber : Weapon {
 
     void Start() {
         damage = 60;
-        areaOfEffect = 0.75f;
+        areaOfEffect = 1.25f;
     }
 
     private void applyDamage() {
