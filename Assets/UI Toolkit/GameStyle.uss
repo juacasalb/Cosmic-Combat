@@ -1,0 +1,10 @@
+.header {
+    width: auto;
+    height: auto;
+    font-size: 36px;
+    align-self: auto;
+    -unity-font: url('project://database/Assets/UI%20Toolkit/PressStart2P-vaV7.ttf?fileID=12800000&guid=1087404a3223ff843a37fee01a9cc62d&type=3#PressStart2P-vaV7');
+}
+
+.button {
+}

@@ -41,5 +41,9 @@ public class Monster : MonoBehaviour {
         
     }
 
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
 
 }

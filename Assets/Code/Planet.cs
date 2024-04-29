@@ -21,8 +21,10 @@ public class Planet : MonoBehaviour {
     public void resetMobility() {
         for(int i = 0; i<transform.childCount;i++) {
             Rigidbody2D rb2d = transform.GetChild(i).GetComponent<Rigidbody2D>();
-            rb2d.bodyType = RigidbodyType2D.Static;
-            rb2d.bodyType = RigidbodyType2D.Dynamic;
+            if(rb2d.bodyType == RigidbodyType2D.Dynamic) {
+                rb2d.bodyType = RigidbodyType2D.Static;
+                rb2d.bodyType = RigidbodyType2D.Dynamic;
+            }
         }
         foreach(GameObject munition in munitions) {
             Rigidbody2D rb2d = munition.transform.GetComponent<Rigidbody2D>();

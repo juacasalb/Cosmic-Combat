@@ -195,6 +195,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circlePrefab: {fileID: 2752153389428339131, guid: 950abdf74cb63024eb87de1bdeeaba94, type: 3}
+  weaponSet: {fileID: 0}
+  isMyTurn: 0
+  isAlive: 0
 --- !u!114 &7613064888074173368
 MonoBehaviour:
   m_ObjectHideFlags: 0

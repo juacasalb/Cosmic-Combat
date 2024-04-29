@@ -58,10 +58,6 @@ public class CommonMonster : Monster {
         direction = new Vector3(xDirection,0f,0f);
     }
 
-    public int getHealthPoints() {
-        return healthPoints;
-    }
-
     private void getRigidBody2D() {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
     }

@@ -16,15 +16,16 @@ public class Character : MonoBehaviour {
     private bool canShoot;
     private float shotCooldown;
     private Rigidbody2D rb2d;
-    private List<int> ammo;
-    private WeaponType currentWeapon;
+    public List<int> ammo;
+    public WeaponType currentWeapon;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Vector3 basePosition = new Vector3(30f,0f,0f);
-    private int characterNumber;
+    public int characterNumber;
     private int xDirection;
     private float movementIATimer;
     private Vector3 directionIA;
+    private GameObject shiftSign;
 
     private void handleWanderMode() {
         setDots(false);
@@ -205,7 +206,6 @@ public class Character : MonoBehaviour {
 
     private void fullHealth() {
         healthPoints=200;
-        isAlive=true;
     }
 
     private void instantiateShoot() {
@@ -273,7 +273,7 @@ public class Character : MonoBehaviour {
     }
 
     private void decreaseLifes() {
-        ShiftSystem.lifes[characterNumber-1]--;
+        ShiftSystem.lifesList[characterNumber-1]--;
     }
 
     public void activate(Vector3 position) {
@@ -284,13 +284,13 @@ public class Character : MonoBehaviour {
     }
 
     public void deactivate() {
+        isAlive = false;
         decreaseLifes();
         handleWanderMode();
-        isAlive = false;
         gameObject.transform.position = basePosition;
         getRigidBody2D();
         rb2d.bodyType = RigidbodyType2D.Static;
-        Planet.deleteMobile(gameObject);
+        if (ShiftSystem.lifesList[characterNumber-1] <= 0) Planet.deleteMobile(gameObject);
     }
 
     public int getHealthPoints() {
@@ -299,6 +299,25 @@ public class Character : MonoBehaviour {
 
     private void getRigidBody2D() {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+    public string translateCurrentWeapon() {
+        string myweapon;
+        switch (currentWeapon) {
+            case WeaponType.LaserRay:
+                myweapon = "Rayo Láser";
+                break;
+            case WeaponType.Mine:
+                myweapon = "Mina";
+                break;
+            case WeaponType.Lightsaber:
+                myweapon = "Sable Láser";
+                break;
+            default:
+                myweapon = "Misil";
+                break;
+        }
+        return myweapon;
     }
 
     private void Start() {
@@ -313,6 +332,7 @@ public class Character : MonoBehaviour {
         isFirstMinePlaced = 0; 
         xDirection = 0;
         movementIATimer = 5f;
+        shiftSign = transform.GetChild(0).gameObject;
 
         obtainNumberInName();
         instantiateShoot();
@@ -335,6 +355,7 @@ public class Character : MonoBehaviour {
         if(isMyTurn) {
             movementIATimer -= Time.deltaTime;
             if(ShiftSystem.isCooperative || (!ShiftSystem.isCooperative && characterNumber==1)) {
+                shiftSign.SetActive(true);
                 if (!inShootMode)
                     handleWanderMode();
                 else
@@ -346,6 +367,7 @@ public class Character : MonoBehaviour {
             }
         } else {
             setDots(false);
+            shiftSign.SetActive(false);
         }
         setShotCooldown();
     }
