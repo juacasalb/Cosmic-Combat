@@ -186,7 +186,7 @@ public class ShiftSystem : MonoBehaviour {
 
     void Update() {
         shiftController();
-        Time.timeScale = 5f;
+        Time.timeScale = 3f;
     }
 
 }

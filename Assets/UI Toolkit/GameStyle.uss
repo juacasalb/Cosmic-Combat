@@ -8,3 +8,10 @@
 
 .button {
 }
+
+.button:hover {
+    scale: 1.1 1.1;
+    -unity-background-image-tint-color: rgb(0, 0, 0);
+    transition-duration: 0.05s;
+    background-color: rgba(0, 0, 0, 0);
+}
