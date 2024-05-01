@@ -11,7 +11,7 @@ public class Missile : Weapon {
     private float speed;
 
     private void OnCollisionEnter2D(Collision2D other) {
-        Explotion explotion = GameObject.FindWithTag("Explotion").GetComponent<Explotion>();
+        GameObject explotion = GameObject.FindWithTag("Explotion");
         Vector2 actualPosition = transform.position;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(actualPosition, areaOfEffect);
 
@@ -28,7 +28,7 @@ public class Missile : Weapon {
                 BossScript.looseHealthPoints(damage);
         }
 
-        explotion.gameObject.transform.position = actualPosition;
+        if(explotion != null) explotion.transform.position = actualPosition;
         gameObject.SetActive(false);
     }
 

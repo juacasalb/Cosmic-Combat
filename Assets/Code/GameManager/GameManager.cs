@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    public AudioSource song;
+    public bool areEffectsEnabled;
+    public float shiftDuration;
     public static int playerScores;
     public static GameManager instance = null;
     public bool isGameFinished;
     public bool isBossDefeated;
     public int killedMonsters;
-    private List<string> charactersInGame;
+    public List<string> charactersInGame;
 
     void Awake(){
-        //First of all, set player points
-        playerScores = 0;
         //Check if instance already exists
         if (instance == null)
             
@@ -31,19 +32,6 @@ public class GameManager : MonoBehaviour {
 
         //Call the InitGame function to initialize the first level 
         InitGame();
-    }
-
-    private void putCharactersOnPlanet() {
-        List<GameObject> list = new List<GameObject>();
-        foreach(string name in charactersInGame) {
-            list.Add(GameObject.Find(name));
-            characterSpawning(GameObject.Find(name));
-        }
-        ShiftSystem.assignMobiles(list);
-    }
-
-    public void characterSpawning(GameObject character) {
-        CharacterSpawner.generateCharacterOnPlanetSurface(character);
     }
 
     public void monsterSpawning() {
@@ -64,8 +52,12 @@ public class GameManager : MonoBehaviour {
 
     void Start() {
         killedMonsters = 0;
+        playerScores = 0;
+        areEffectsEnabled = true;
+        shiftDuration = 10f;
         isBossDefeated = false;
         isGameFinished = false;
+        song = GetComponent<AudioSource>();
     }
     
     void Update() {
@@ -84,6 +76,5 @@ public class GameManager : MonoBehaviour {
         string name2 = "Demon2";
         string name3 = "Demon3";
         charactersInGame = new List<string>{ name1, name2, name3 };
-        putCharactersOnPlanet();
     }
 }

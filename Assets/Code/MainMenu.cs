@@ -6,11 +6,14 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
-    private UIDocument document;
+    public UIDocument document, optionsDocument;
     private Button play, options, exit;
 
-    private void getButtons() {
+    private void getDocuments() {
         document = GetComponent<UIDocument>();
+        optionsDocument = GameObject.FindWithTag("Options").GetComponent<UIDocument>();
+    }
+    private void getButtons() {
         play = document.rootVisualElement.Query<Button>("Play");
         options = document.rootVisualElement.Query<Button>("Options");
         exit = document.rootVisualElement.Query<Button>("Exit");
@@ -21,6 +24,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     void Awake() {
+        getDocuments();
         getButtons();
     }
 
@@ -29,7 +33,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     private void optionsMenu(ClickEvent evt) {
-        //SceneManager.LoadScene("DemoGame");
+        optionsDocument.sortingOrder = 2;
     }
 
     private void exitGame(ClickEvent evt) {

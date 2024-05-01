@@ -462,7 +462,6 @@ GameObject:
   m_Component:
   - component: {fileID: 118050648}
   - component: {fileID: 118050647}
-  - component: {fileID: 118050646}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -470,14 +469,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &118050646
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 118050645}
-  m_Enabled: 1
 --- !u!20 &118050647
 Camera:
   m_ObjectHideFlags: 0
@@ -1482,53 +1473,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07fade3caad25aa438f3d8666304c181, type: 3}
---- !u!1 &645744123
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 645744125}
-  - component: {fileID: 645744124}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: GameController
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &645744124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645744123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a96bec15ae5951948be7f97c6f0c34ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGameFinished: 0
-  isBossDefeated: 0
-  killedMonsters: 0
---- !u!4 &645744125
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645744123}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &686585453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5086,7 +5030,6 @@ SceneRoots:
   - {fileID: 6371956}
   - {fileID: 406588250}
   - {fileID: 1989496294}
-  - {fileID: 645744125}
   - {fileID: 1221689248}
   - {fileID: 1779337904}
   - {fileID: 489577775}

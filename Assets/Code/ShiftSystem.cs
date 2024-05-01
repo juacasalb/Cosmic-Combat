@@ -20,6 +20,16 @@ public class ShiftSystem : MonoBehaviour {
     private string _lifes, _score, _lightsabers, _mines, _laserrays, _secondsleft, _selectedweapon, _shifts, _health;
     private Label lifes, score, lightsabers, mines, laserrays, secondsleft, selectedweapon, shifts, health;
 
+    public void setCharacters() {  
+        List<string> characterNames = GameManager.instance.charactersInGame;
+        List<GameObject> list = new List<GameObject>();
+        foreach(string name in characterNames) {
+            list.Add(GameObject.Find(name));
+            CharacterSpawner.generateCharacterOnPlanetSurface(GameObject.Find(name));
+        }
+        assignMobiles(list);
+    }
+
     public static void assignMobiles(List<GameObject> list) {
         getPlanet();
         foreach(GameObject child in list) {
@@ -135,7 +145,7 @@ public class ShiftSystem : MonoBehaviour {
             totalShifts++;
             shifts.text = _shifts + totalShifts;
             shiftCounter = shiftCounter % mobiles.Count;
-            shiftTimer = 10f;
+            shiftTimer = GameManager.instance.shiftDuration;
         }
         getMobileInfo();
     }
@@ -173,6 +183,7 @@ public class ShiftSystem : MonoBehaviour {
         getPlanet();
         getLabels();
         setAuxText();
+        setCharacters();
     }
 
     void Start() {

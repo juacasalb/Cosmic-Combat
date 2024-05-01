@@ -12,6 +12,10 @@ public class Explotion : MonoBehaviour {
         }
     }
 
+    void Awake() {
+        gameObject.SetActive(GameManager.instance.areEffectsEnabled);
+    }
+
     void Update() {
         if(!gameObject.activeSelf && animator==null) animator = GetComponent<Animator>();
         if(gameObject.activeSelf) {
