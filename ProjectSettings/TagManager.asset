@@ -12,6 +12,8 @@ TagManager:
   - Munition
   - Boss
   - Options
+  - Pause
+  - EndGame
   layers:
   - Default
   - TransparentFX

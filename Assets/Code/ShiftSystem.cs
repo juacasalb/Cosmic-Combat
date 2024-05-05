@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 
 public class ShiftSystem : MonoBehaviour {
     private const string qmark = "?";
-    private UIDocument document;
-    public static bool isCooperative;
+    private UIDocument document, pauseMenuDocument, endGameMenuDocument;
+    public static bool isCooperative, isGamePaused, isGameFinished;
     public static List<int> lifesList;
     private static List<int> scoresList;
     private int shiftCounter;
@@ -18,7 +18,7 @@ public class ShiftSystem : MonoBehaviour {
     public static float shiftTimer;
     private static GameObject entityOnCurrentTurn;
     private string _lifes, _score, _lightsabers, _mines, _laserrays, _secondsleft, _selectedweapon, _shifts, _health;
-    private Label lifes, score, lightsabers, mines, laserrays, secondsleft, selectedweapon, shifts, health;
+    private Label lifes, score, lightsabers, mines, laserrays, secondsleft, selectedweapon, shifts, health, menutitle;
 
     public void setCharacters() {  
         List<string> characterNames = GameManager.instance.charactersInGame;
@@ -44,8 +44,26 @@ public class ShiftSystem : MonoBehaviour {
     public void resetMobility() {
         planet.resetMobility();
     }
-    private void gameOver() {
-        Debug.Log("Game Over!");
+    private void endGame(string title) {
+        menutitle.text = title;
+        Time.timeScale = 0f;
+        endGameMenuDocument.enabled = true;
+        isGamePaused = true;
+        GameManager.playerScore = scoresList[0];
+    }
+
+    private void checkGameStatus() {
+        if(isGameFinished) endGame("¡Has ganado!");
+    }
+
+    private void detectPauseKeyCode() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if(isGamePaused) {
+                resumeGame();
+            } else {
+                pauseGame();
+            }
+        }
     }
 
     private void checkSpawning() {
@@ -100,7 +118,7 @@ public class ShiftSystem : MonoBehaviour {
             
 
         if(lifesList[0] <= 0 || lifesList.Sum() <= 0) {
-            gameOver();
+            endGame("Has perdido...");
         }
 
         entityOnCurrentTurn = mobiles[shiftCounter].gameObject;
@@ -148,6 +166,8 @@ public class ShiftSystem : MonoBehaviour {
             shiftTimer = GameManager.instance.shiftDuration;
         }
         getMobileInfo();
+        detectPauseKeyCode();
+        checkGameStatus();
     }
 
     private void getLabels() {
@@ -161,6 +181,8 @@ public class ShiftSystem : MonoBehaviour {
         selectedweapon = document.rootVisualElement.Query<Label>("SelectedWeapon");
         shifts = document.rootVisualElement.Query<Label>("TotalShifts");
         health = document.rootVisualElement.Query<Label>("HealthPoints");
+
+        menutitle = endGameMenuDocument.rootVisualElement.Query<Label>("Menu");
     }
 
     private void setAuxText() {
@@ -179,8 +201,27 @@ public class ShiftSystem : MonoBehaviour {
         planet = GameObject.Find("Planet").GetComponent<Planet>();
     }
 
+    private void pauseGame() {
+        Time.timeScale = 0f;
+        pauseMenuDocument.enabled = true;
+        isGamePaused = true;
+    }
+
+    private void resumeGame() {
+        Time.timeScale = 1f;
+        pauseMenuDocument.enabled = false;
+        isGamePaused = false;
+    }
+
+    private void getSideMenus() {
+        pauseMenuDocument = GameObject.FindWithTag("Pause").GetComponent<UIDocument>();
+        endGameMenuDocument = GameObject.FindWithTag("EndGame").GetComponent<UIDocument>();
+
+    }
+
     void Awake() {
         getPlanet();
+        getSideMenus();
         getLabels();
         setAuxText();
         setCharacters();
@@ -191,13 +232,15 @@ public class ShiftSystem : MonoBehaviour {
         shiftCounter = 0;
         totalShifts = 0;
         shiftTimer = 0f;
+        isGamePaused = false;
+        isGameFinished = false;
         lifesList = new List<int>{3,3,3};
         scoresList = new List<int>{0,0,0};
     }
 
     void Update() {
         shiftController();
-        Time.timeScale = 3f;
+        Time.timeScale = 10f;
     }
 
 }

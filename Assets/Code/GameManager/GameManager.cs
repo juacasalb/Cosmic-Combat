@@ -7,9 +7,8 @@ public class GameManager : MonoBehaviour {
     public AudioSource song;
     public bool areEffectsEnabled;
     public float shiftDuration;
-    public static int playerScores;
+    public static int playerScore;
     public static GameManager instance = null;
-    public bool isGameFinished;
     public bool isBossDefeated;
     public int killedMonsters;
     public List<string> charactersInGame;
@@ -52,11 +51,10 @@ public class GameManager : MonoBehaviour {
 
     void Start() {
         killedMonsters = 0;
-        playerScores = 0;
+        playerScore = 0;
         areEffectsEnabled = true;
         shiftDuration = 10f;
         isBossDefeated = false;
-        isGameFinished = false;
         song = GetComponent<AudioSource>();
     }
     
@@ -64,10 +62,6 @@ public class GameManager : MonoBehaviour {
         if(isBossDefeated) {
             rocketSpawning();
             isBossDefeated = false;
-        }
-        if(isGameFinished) {
-            Debug.Log("You win!"); //
-            isGameFinished = false;
         }
     }
 

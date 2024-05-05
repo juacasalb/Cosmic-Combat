@@ -8,7 +8,7 @@ public class Rocket : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.GetComponent<Character>() != null) {
-            GameManager.instance.isGameFinished = true;
+            ShiftSystem.isGameFinished = true;
         }
     }
 
