@@ -3928,6 +3928,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec51107900626a142b26e26a001771fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  redMaterial: {fileID: 2100000, guid: 07e0089e8c15130498ffcb3b6222f8b7, type: 2}
+  blueMaterial: {fileID: 2100000, guid: 57d96261fa1862d46a99a7d7ad933a46, type: 2}
+  greenMaterial: {fileID: 2100000, guid: 8027d76d2f4b4ea46951d23ac25156a1, type: 2}
 --- !u!50 &1925311443
 Rigidbody2D:
   serializedVersion: 4

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Planet : MonoBehaviour {
     private static Transform mytransform;
     public static GameObject[] munitions;
+    public Material redMaterial, blueMaterial, greenMaterial;
 
     public List<Transform> getMobiles() {
         List<Transform> mobiles = new List<Transform>();
@@ -33,20 +34,28 @@ public class Planet : MonoBehaviour {
                 rb2d.bodyType = RigidbodyType2D.Dynamic;
             }
         }
-
     }
 
-    void choosePlanetTexture(PlanetType texture) {
+    void choosePlanetTexture() {
+        switch(GameManager.instance.planetMaterial) {
+            case "Rojo":
+                gameObject.GetComponent<Renderer>().material = redMaterial;
+                break;
+            case "Azul":
+                gameObject.GetComponent<Renderer>().material = blueMaterial;
+                break;
+            default:
+                gameObject.GetComponent<Renderer>().material = greenMaterial;
+                break;
+        }
+    }
 
+    void Awake() {
+        choosePlanetTexture();
     }
 
     void Start() {
-        //Aqui se va a setear el PNG respecto al TipoPlaneta correspondiente
         mytransform = transform;
         munitions = GameObject.FindGameObjectsWithTag("Munition");
-    }
-
-    void Update() {
-        
     }
 }

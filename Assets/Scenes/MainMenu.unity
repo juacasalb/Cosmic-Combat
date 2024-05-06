@@ -427,13 +427,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96bec15ae5951948be7f97c6f0c34ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planetMaterial: 
   song: {fileID: 0}
   areEffectsEnabled: 0
-  shiftDuration: 0
-  isGameFinished: 0
+  isCooperativeMode: 0
   isBossDefeated: 0
+  shiftDuration: 0
   killedMonsters: 0
   charactersInGame: []
+  name1: 
+  name2: 
+  name3: 
 --- !u!4 &555227658
 Transform:
   m_ObjectHideFlags: 0
@@ -457,6 +461,75 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555227654}
   m_Enabled: 1
+--- !u!1 &558590591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 558590593}
+  - component: {fileID: 558590592}
+  - component: {fileID: 558590594}
+  m_Layer: 5
+  m_Name: ChooseCharacters
+  m_TagString: ChooseElements
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &558590592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558590591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 53987e75e3b81a941b8ab82f20d23914, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: ddf454196c8b3294793780d7f350f592, type: 3}
+  m_SortingOrder: 0
+--- !u!4 &558590593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558590591}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &558590594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558590591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ce771b565fc894b8f6959ddcd99918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  document: {fileID: 0}
+  demonSprite: {fileID: 21300000, guid: 1a3dcb8e1d7b700429370067bd8c5177, type: 3}
+  robotSprite: {fileID: 21300000, guid: 29cf844c4328dc44f86ae992095e43c6, type: 3}
+  bluishSprite: {fileID: 21300000, guid: 1269f89dd77465f4b969056f0722773f, type: 3}
+  slimySprite: {fileID: 21300000, guid: abf65da49546bae40bc5aac9a0b8d23e, type: 3}
+  redPlanetSprite: {fileID: 21300000, guid: 5caf73e58e15cbc4d9aa6c88604f6734, type: 3}
+  bluePlanetSprite: {fileID: 21300000, guid: a9bf26e97faef11458792b129ace9e2b, type: 3}
+  greenPlanetSprite: {fileID: 21300000, guid: 30dddf1d917629949a0add64f3a19295, type: 3}
 --- !u!1 &669271163
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,6 +593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   document: {fileID: 0}
   optionsDocument: {fileID: 0}
+  chooseElementsDocument: {fileID: 0}
 --- !u!1 &976779994
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,4 +664,5 @@ SceneRoots:
   - {fileID: 313027056}
   - {fileID: 669271165}
   - {fileID: 976779997}
+  - {fileID: 558590593}
   - {fileID: 555227658}

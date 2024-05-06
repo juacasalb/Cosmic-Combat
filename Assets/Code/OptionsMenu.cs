@@ -7,14 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class OptionsMenu : MonoBehaviour {
     public UIDocument document;
-    private List<string> difficultyOptions, effectsOptions;
     private Slider volume;
     private DropdownField difficulty, effects;
     private Button goback;
 
     private void getVisualElements() {
-        difficultyOptions = new List<string> { "Fácil", "Normal", "Difícil" };
-        effectsOptions = new List<string> { "Sí", "No" };
 
         document = GetComponent<UIDocument>();
         volume = document.rootVisualElement.Query<Slider>("VolumeSlider");

@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    public string planetMaterial;
     public AudioSource song;
-    public bool areEffectsEnabled;
+    public bool areEffectsEnabled, isCooperativeMode, isBossDefeated;
     public float shiftDuration;
     public static int playerScore;
     public static GameManager instance = null;
-    public bool isBossDefeated;
     public int killedMonsters;
     public List<string> charactersInGame;
+    public string name1,name2,name3;
 
     void Awake(){
         //Check if instance already exists
@@ -54,6 +55,8 @@ public class GameManager : MonoBehaviour {
         playerScore = 0;
         areEffectsEnabled = true;
         shiftDuration = 10f;
+        planetMaterial = "Rojo";
+        isCooperativeMode = true;
         isBossDefeated = false;
         song = GetComponent<AudioSource>();
     }
@@ -66,9 +69,8 @@ public class GameManager : MonoBehaviour {
     }
 
     void InitGame() {
-        string name1 = "Demon1";
-        string name2 = "Demon2";
-        string name3 = "Demon3";
-        charactersInGame = new List<string>{ name1, name2, name3 };
+        name1 = "Slimy1";
+        name2 = "Slimy2";
+        name3 = "Slimy3";
     }
 }

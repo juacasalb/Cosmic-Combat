@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
-    public UIDocument document, optionsDocument;
+    public UIDocument document, optionsDocument, chooseElementsDocument;
     private Button play, options, exit;
 
     private void getDocuments() {
         document = GetComponent<UIDocument>();
         optionsDocument = GameObject.FindWithTag("Options").GetComponent<UIDocument>();
+        chooseElementsDocument = GameObject.FindWithTag("ChooseElements").GetComponent<UIDocument>();
     }
     private void getButtons() {
         play = document.rootVisualElement.Query<Button>("Play");
@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     private void playGame(ClickEvent evt) {
-        SceneManager.LoadScene("DemoGame");
+        chooseElementsDocument.sortingOrder = 2;
     }
 
     private void optionsMenu(ClickEvent evt) {

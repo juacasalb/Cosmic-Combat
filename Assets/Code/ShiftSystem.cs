@@ -21,7 +21,12 @@ public class ShiftSystem : MonoBehaviour {
     private Label lifes, score, lightsabers, mines, laserrays, secondsleft, selectedweapon, shifts, health, menutitle;
 
     public void setCharacters() {  
-        List<string> characterNames = GameManager.instance.charactersInGame;
+        List<string> characterNames = new List<string>{
+            GameManager.instance.name1, 
+            GameManager.instance.name2, 
+            GameManager.instance.name3
+        };
+        
         List<GameObject> list = new List<GameObject>();
         foreach(string name in characterNames) {
             list.Add(GameObject.Find(name));
@@ -228,7 +233,7 @@ public class ShiftSystem : MonoBehaviour {
     }
 
     void Start() {
-        isCooperative = true;
+        isCooperative = GameManager.instance.isCooperativeMode;
         shiftCounter = 0;
         totalShifts = 0;
         shiftTimer = 0f;

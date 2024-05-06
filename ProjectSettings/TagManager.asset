@@ -14,6 +14,7 @@ TagManager:
   - Options
   - Pause
   - EndGame
+  - ChooseElements
   layers:
   - Default
   - TransparentFX
