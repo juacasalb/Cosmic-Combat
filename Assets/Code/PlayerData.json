@@ -1,0 +1,16 @@
+{
+  "playerData": [
+    {
+      "username": "usuario1",
+      "password": "password1",
+      "score": 0,
+      "earnedItems": []
+    },
+    {
+      "username": "usuario2",
+      "password": "password2",
+      "score": 0,
+      "earnedItems": []
+    }
+  ]
+}

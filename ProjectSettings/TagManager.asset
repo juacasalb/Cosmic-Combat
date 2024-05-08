@@ -15,6 +15,7 @@ TagManager:
   - Pause
   - EndGame
   - ChooseElements
+  - Login
   layers:
   - Default
   - TransparentFX

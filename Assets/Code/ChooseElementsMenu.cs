@@ -138,11 +138,11 @@ public class ChooseElementsMenu : MonoBehaviour {
         string material;
         string str = evt.newValue.ToString();
         switch (str) {
-            case "Verde":
+            case "Gamínedes":
                 material = "Verde";
                 planetSpriter.style.backgroundImage = greenPlanetSprite.texture;
                 break;
-            case "Azul":
+            case "Andrómeda":
                 material = "Azul";
                 planetSpriter.style.backgroundImage = bluePlanetSprite.texture;
                 break;
