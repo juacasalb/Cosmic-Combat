@@ -788,7 +788,7 @@ GameObject:
   - component: {fileID: 406588251}
   m_Layer: 5
   m_Name: HUD
-  m_TagString: Untagged
+  m_TagString: HUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3117,6 +3117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 0}
+  hudDocument: {fileID: 0}
 --- !u!114 &1614437961
 MonoBehaviour:
   m_ObjectHideFlags: 0

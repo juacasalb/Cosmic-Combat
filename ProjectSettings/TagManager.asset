@@ -16,6 +16,10 @@ TagManager:
   - EndGame
   - ChooseElements
   - Login
+  - CharacterShop
+  - PlanetShop
+  - HUD
+  - MainMenu
   layers:
   - Default
   - TransparentFX

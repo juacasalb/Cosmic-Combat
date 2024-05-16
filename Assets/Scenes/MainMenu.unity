@@ -206,6 +206,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &248468089
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 248468091}
+  - component: {fileID: 248468090}
+  - component: {fileID: 248468092}
+  m_Layer: 5
+  m_Name: CharacterShop
+  m_TagString: CharacterShop
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &248468090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248468089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 53987e75e3b81a941b8ab82f20d23914, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: f6c2c174b4501e7448740d2f9312de99, type: 3}
+  m_SortingOrder: 0
+--- !u!4 &248468091
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248468089}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &248468092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248468089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27687c9513416424f83c103437eea2b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  document: {fileID: 0}
+  planetShopDocument: {fileID: 0}
+  _demonBoughtSprite: {fileID: 21300000, guid: d17ce062c9282c4468d8f84765fe9100, type: 3}
+  _robotBoughtSprite: {fileID: 21300000, guid: 1f5ae1c608cf04d4fbcfd276c59f5ad8, type: 3}
+  _bluishBoughtSprite: {fileID: 21300000, guid: 49324b31c839993468f80de94b363c89, type: 3}
+  _demonSprite: {fileID: 21300000, guid: 8c7085559c4ebea408d68c7c180b9726, type: 3}
+  _robotSprite: {fileID: 21300000, guid: bc6c9caed3f57bf4caa7743adef54a8d, type: 3}
+  _bluishSprite: {fileID: 21300000, guid: 5d7af555610dd4c418977c9ef441d744, type: 3}
 --- !u!1 &313027054
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96bec15ae5951948be7f97c6f0c34ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerUserName: 
   planetMaterial: 
   song: {fileID: 0}
   areEffectsEnabled: 0
@@ -438,6 +508,8 @@ MonoBehaviour:
   name1: 
   name2: 
   name3: 
+  jsonData: 
+  jsonUrl: 
 --- !u!4 &555227658
 Transform:
   m_ObjectHideFlags: 0
@@ -543,7 +615,7 @@ GameObject:
   - component: {fileID: 669271166}
   m_Layer: 5
   m_Name: MainMenu
-  m_TagString: Untagged
+  m_TagString: MainMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -594,6 +666,8 @@ MonoBehaviour:
   document: {fileID: 0}
   optionsDocument: {fileID: 0}
   chooseElementsDocument: {fileID: 0}
+  loginDocument: {fileID: 0}
+  characterShopDocument: {fileID: 0}
 --- !u!1 &976779994
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +680,7 @@ GameObject:
   - component: {fileID: 976779996}
   - component: {fileID: 976779998}
   m_Layer: 5
-  m_Name: Options
+  m_Name: OptionsMenu
   m_TagString: Options
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -656,6 +730,73 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 0}
+--- !u!1 &1722257678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1722257680}
+  - component: {fileID: 1722257679}
+  - component: {fileID: 1722257681}
+  m_Layer: 5
+  m_Name: PlanetShop
+  m_TagString: PlanetShop
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1722257679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722257678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 53987e75e3b81a941b8ab82f20d23914, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: f34d2ac41cb123747a6b45528d354883, type: 3}
+  m_SortingOrder: 0
+--- !u!4 &1722257680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722257678}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1722257681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722257678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b0af14dc0ce5d4a8dba20b9dc5d113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  document: {fileID: 0}
+  characterShopDocument: {fileID: 0}
+  _redPlanetBoughtSprite: {fileID: 21300000, guid: 5235195e13c48044d906b7432b240e6e, type: 3}
+  _bluePlanetBoughtSprite: {fileID: 21300000, guid: 38becc5027978164da4bb6698e7ca3dd, type: 3}
+  _redPlanetSprite: {fileID: 21300000, guid: cf6286067b7e4d54ea6f35fff643ba55, type: 3}
+  _bluePlanetSprite: {fileID: 21300000, guid: 285135d7011aa4e4b95c53c7c26ba5c9, type: 3}
 --- !u!1 &1998278821
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,3 +870,5 @@ SceneRoots:
   - {fileID: 558590593}
   - {fileID: 555227658}
   - {fileID: 1998278823}
+  - {fileID: 248468091}
+  - {fileID: 1722257680}

@@ -1,16 +1,32 @@
 {
   "playerData": [
     {
+      "username": "admin",
+      "password": "admin",
+      "score": 10000,
+      "earnedItems": [
+        "demon",
+        "redplanet",
+        "robot",
+        "bluish",
+        "blueplanet"
+      ]
+    },
+    {
       "username": "usuario1",
       "password": "password1",
       "score": 0,
-      "earnedItems": []
+      "earnedItems": [
+        "redplanet"
+      ]
     },
     {
       "username": "usuario2",
       "password": "password2",
       "score": 0,
-      "earnedItems": []
+      "earnedItems": [
+        "robot"
+      ]
     }
   ]
 }

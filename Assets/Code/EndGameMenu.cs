@@ -6,11 +6,15 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
 public class EndGameMenu : MonoBehaviour {
-    public UIDocument document;
+    public UIDocument document, hudDocument;
     private Button exit;
 
-    private void getButtons() {
+    private void getDocuments() {
         document = GetComponent<UIDocument>();
+        hudDocument = GameObject.FindWithTag("HUD").GetComponent<UIDocument>();
+    }
+
+    private void getButtons() {
         exit = document.rootVisualElement.Query<Button>("Exit");
     }
 
@@ -23,12 +27,14 @@ public class EndGameMenu : MonoBehaviour {
     }
 
     void Awake() {
+        getDocuments();
         getButtons();
     }
 
     private void exitGame(ClickEvent evt) {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
+        hudDocument.enabled = true;
         ShiftSystem.isGamePaused = false;
     }
 

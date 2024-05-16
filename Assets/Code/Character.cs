@@ -66,7 +66,6 @@ public class Character : MonoBehaviour {
         int currentIndex = (int)currentWeapon;
         currentIndex = (currentIndex + direction + weaponCount) % weaponCount;
         currentWeapon = (WeaponType)currentIndex;
-        Debug.Log("El arma actual es:" + currentWeapon);
     }
 
     private Vector3 clickCoordinates(Vector3 actualPosition) {
@@ -325,7 +324,7 @@ public class Character : MonoBehaviour {
         isMyTurn = false;
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
-        ammo = new List<int> {5, 5, 5}; //
+        ammo = new List<int> {0, 0, 0}; 
         getRigidBody2D();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();

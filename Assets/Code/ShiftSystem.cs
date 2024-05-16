@@ -50,11 +50,13 @@ public class ShiftSystem : MonoBehaviour {
         planet.resetMobility();
     }
     private void endGame(string title) {
+        document.enabled = false;
         menutitle.text = title;
         Time.timeScale = 0f;
         endGameMenuDocument.enabled = true;
         isGamePaused = true;
         GameManager.playerScore = scoresList[0];
+        scoresList[0] = 0;
     }
 
     private void checkGameStatus() {
@@ -127,8 +129,6 @@ public class ShiftSystem : MonoBehaviour {
         }
 
         entityOnCurrentTurn = mobiles[shiftCounter].gameObject;
-
-        Debug.Log("Es turno de:"+mobiles[shiftCounter].gameObject.name); //
     }
 
     private void getMobileInfo() {
@@ -245,7 +245,6 @@ public class ShiftSystem : MonoBehaviour {
 
     void Update() {
         shiftController();
-        Time.timeScale = 10f;
     }
 
 }

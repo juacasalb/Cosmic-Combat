@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using Newtonsoft.Json;
 
 public class GameManager : MonoBehaviour {
 
+    public string playerUserName;
     public string planetMaterial;
     public AudioSource song;
     public bool areEffectsEnabled, isCooperativeMode, isBossDefeated;
@@ -12,7 +15,8 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     public int killedMonsters;
     public List<string> charactersInGame;
-    public string name1,name2,name3;
+    public string name1,name2,name3, jsonData, jsonUrl;
+    private PlayerDataContainer container;
 
     void Awake(){
         //Check if instance already exists
@@ -32,6 +36,12 @@ public class GameManager : MonoBehaviour {
 
         //Call the InitGame function to initialize the first level 
         InitGame();
+    }
+
+    private void getJSONPath() {
+        string url = Application.dataPath + "/Code/PlayerData.json";
+        jsonUrl = url.Replace("/", "\\");
+        jsonData = File.ReadAllText(jsonUrl);
     }
 
     public void monsterSpawning() {
@@ -66,9 +76,19 @@ public class GameManager : MonoBehaviour {
             rocketSpawning();
             isBossDefeated = false;
         }
+        if(playerScore>0) {
+            getJSONPath();
+            container = JsonConvert.DeserializeObject<PlayerDataContainer>(jsonData);
+            container.playerData.Find(p => p.username.Equals(playerUserName)).score += playerScore;
+            string updatedJsonData = JsonConvert.SerializeObject(container, Formatting.Indented);
+            File.WriteAllText(jsonUrl, updatedJsonData);
+            playerScore = 0;
+        }
     }
 
     void InitGame() {
+        playerUserName = "admin";
+        getJSONPath();
         name1 = "Slimy1";
         name2 = "Slimy2";
         name3 = "Slimy3";

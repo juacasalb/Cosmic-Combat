@@ -7,10 +7,6 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 
-public class PlayerDataContainer {
-    public List<PlayerData> playerData { get; set; }
-}
-
 public class LoginMenu : MonoBehaviour {
     public UIDocument document;
     private string userNameString, passwordString, jsonData, jsonUrl;
@@ -39,9 +35,7 @@ public class LoginMenu : MonoBehaviour {
         };
 
         container.playerData.Add(newPlayer);
-        //Debug.Log(playerData.Count);
         string updatedJsonData = JsonConvert.SerializeObject(container, Formatting.Indented);
-        //Debug.Log(updatedJsonData);
         File.WriteAllText(jsonUrl, updatedJsonData);
     }
 
@@ -71,6 +65,10 @@ public class LoginMenu : MonoBehaviour {
 
     private void mainMenu() {
         document.sortingOrder = 0;
+        GameManager.instance.playerUserName = userNameString;
+        CharacterShopMenu.getCharactersInUser();
+        PlanetShopMenu.getPlanetsInUser();
+        ChooseElementsMenu.setDropdownFieldValues();
     }
 
     private void setIncorrectPasswordText() {
