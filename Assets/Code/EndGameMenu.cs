@@ -32,6 +32,7 @@ public class EndGameMenu : MonoBehaviour {
     }
 
     private void exitGame(ClickEvent evt) {
+        GameManager.instance.playSound("button");
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
         hudDocument.enabled = true;

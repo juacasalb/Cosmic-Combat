@@ -36,6 +36,7 @@ public class Boss : Monster {
     }
 
     protected override void shoot() {
+        GameManager.instance.playSound("laserray");
         LaserRay laserRay = transform.Find("LaserRay").GetComponent<LaserRay>();
         string name = gameObject.name;
 
@@ -56,6 +57,7 @@ public class Boss : Monster {
     }
 
     public override void looseHealthPoints(int damage) {
+        GameManager.instance.playSound("damage");
         healthPoints-=(damage-10);
     }
 
@@ -71,6 +73,7 @@ public class Boss : Monster {
     }
 
     public override void deactivate() {
+        GameManager.instance.playSound("death");
         isAlive = false;
         ShiftSystem.distributeScoreToCharacters(150);
         GameManager.instance.isBossDefeated = true;

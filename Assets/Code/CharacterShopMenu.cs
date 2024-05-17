@@ -88,6 +88,7 @@ public class CharacterShopMenu : MonoBehaviour {
     }
 
     private static int getScoreFromJSON() {
+        getJSONPath();
         PlayerData userFromJSON = getUserFromJSON();
         int userScore = userFromJSON.score;
         playerScore.text = userScore.ToString();
@@ -162,10 +163,12 @@ public class CharacterShopMenu : MonoBehaviour {
     }
 
     private void goBack(ClickEvent evt) {
+        GameManager.instance.playSound("button");
         document.sortingOrder = 0;
     }
 
     private void goForward(ClickEvent evt) {
+        GameManager.instance.playSound("button");
         planetShopDocument.sortingOrder = 3;
         PlanetShopMenu.getPlanetsInUser();
     }

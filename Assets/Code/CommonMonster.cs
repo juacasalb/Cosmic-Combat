@@ -16,6 +16,7 @@ public class CommonMonster : Monster {
     }
 
     protected override void shoot() {
+        GameManager.instance.playSound("missile");
         Missile missile = transform.Find("Missile").GetComponent<Missile>();
         Vector3 actualPosition = transform.position;
         float randomX = UnityEngine.Random.Range(-1f, 1f);
@@ -30,6 +31,7 @@ public class CommonMonster : Monster {
     }
 
     public override void looseHealthPoints(int damage) {
+        GameManager.instance.playSound("damage");
         healthPoints-=damage;
     }
 
@@ -45,6 +47,7 @@ public class CommonMonster : Monster {
     }
 
     public override void deactivate() {
+        GameManager.instance.playSound("death");
         GameManager.instance.killedMonsters++;
         ShiftSystem.distributeScoreToCharacters(10);
         gameObject.transform.position = basePosition;

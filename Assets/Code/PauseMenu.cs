@@ -31,12 +31,14 @@ public class PauseMenu : MonoBehaviour {
 
     private void restartGame(ClickEvent evt) {
         Time.timeScale = 1f;
+        GameManager.instance.playSound("button");
         SceneManager.LoadScene("DemoGame");
         ShiftSystem.isGamePaused = false;
     }
 
     private void exitGame(ClickEvent evt) {
         Time.timeScale = 1f;
+        GameManager.instance.playSound("button");
         SceneManager.LoadScene("MainMenu");
         ShiftSystem.isGamePaused = false;
     }

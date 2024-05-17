@@ -11,6 +11,7 @@ public class Missile : Weapon {
     private float speed;
 
     private void OnCollisionEnter2D(Collision2D other) {
+        GameManager.instance.playSound("explode");
         GameObject explotion = GameObject.FindWithTag("Explotion");
         Vector2 actualPosition = transform.position;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(actualPosition, areaOfEffect);
@@ -48,6 +49,7 @@ public class Missile : Weapon {
         }
         Vector3 position = transform.position;
         if(position.x > 10 || position.x < -10 || position.y < -7.5 || position.y > 7.5) {
+            GameManager.instance.playSound("explode");
             gameObject.SetActive(false);
             direction = Vector3.zero;
         }

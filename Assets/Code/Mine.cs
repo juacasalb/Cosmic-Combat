@@ -8,6 +8,7 @@ public class Mine : Weapon {
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
+        GameManager.instance.playSound("explode");
 
         if (other.gameObject.GetComponent<CommonMonster>() != null) {
             CommonMonster commonMonsterScript = other.gameObject.GetComponent<CommonMonster>();

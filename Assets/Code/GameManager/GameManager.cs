@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
 
     public string playerUserName;
     public string planetMaterial;
-    public AudioSource song;
+    public AudioSource music, sounds;
     public bool areEffectsEnabled, isCooperativeMode, isBossDefeated;
     public float shiftDuration;
     public static int playerScore;
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     public List<string> charactersInGame;
     public string name1,name2,name3, jsonData, jsonUrl;
     private PlayerDataContainer container;
+    public AudioClip[] sources;
 
     void Awake(){
         //Check if instance already exists
@@ -60,6 +61,38 @@ public class GameManager : MonoBehaviour {
         Rocket.generateRocketOnPlanetSurface();
     }
 
+    public void playSound(string soundName) {
+        switch(soundName) {
+            case "explode":
+                sounds.PlayOneShot(sources[0]); 
+                break;
+            case "lightsaber":
+                sounds.PlayOneShot(sources[1]);
+                break;
+            case "damage":
+                sounds.PlayOneShot(sources[2]);
+                break;
+            case "death":
+                sounds.PlayOneShot(sources[3]);
+                break;
+            case "laserray":
+                sounds.PlayOneShot(sources[4]);
+                break;
+            case "munition":
+                sounds.PlayOneShot(sources[5]);
+                break;
+            case "button":
+                sounds.PlayOneShot(sources[6]);
+                break;
+            case "gameover":
+                sounds.PlayOneShot(sources[7]);
+                break;
+            default:
+                sounds.PlayOneShot(sources[8]);
+                break;
+        }
+    }
+
     void Start() {
         killedMonsters = 0;
         playerScore = 0;
@@ -68,7 +101,6 @@ public class GameManager : MonoBehaviour {
         planetMaterial = "Rojo";
         isCooperativeMode = true;
         isBossDefeated = false;
-        song = GetComponent<AudioSource>();
     }
     
     void Update() {

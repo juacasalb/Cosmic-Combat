@@ -40,7 +40,7 @@ public class ChooseElementsMenu : MonoBehaviour {
         play.RegisterCallback<ClickEvent>(evt => playGame(evt));
     }
 
-    private void getJSONPath() {
+    private static void getJSONPath() {
         string url = Application.dataPath + "/Code/PlayerData.json";
         jsonUrl = url.Replace("/", "\\");
         jsonData = File.ReadAllText(jsonUrl);
@@ -55,6 +55,7 @@ public class ChooseElementsMenu : MonoBehaviour {
     }
 
     public static void setDropdownFieldValues() {
+        getJSONPath();
         PlayerData userFromJSON = getUserFromJSON();
 
         List<string> userEarnedItems, characters, planets;
@@ -97,10 +98,12 @@ public class ChooseElementsMenu : MonoBehaviour {
     }
 
     private void goBack(ClickEvent evt) {
+        GameManager.instance.playSound("button");
         document.sortingOrder = 0;
     }
 
     private void playGame(ClickEvent evt) {
+        GameManager.instance.playSound("button");
         SceneManager.LoadScene("DemoGame");
     }
 

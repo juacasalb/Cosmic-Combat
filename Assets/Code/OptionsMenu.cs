@@ -7,19 +7,21 @@ using UnityEngine.SceneManagement;
 
 public class OptionsMenu : MonoBehaviour {
     public UIDocument document;
-    private Slider volume;
+    private Slider music, sounds;
     private DropdownField difficulty, effects;
     private Button goback;
 
     private void getVisualElements() {
 
         document = GetComponent<UIDocument>();
-        volume = document.rootVisualElement.Query<Slider>("VolumeSlider");
+        music = document.rootVisualElement.Query<Slider>("MusicSlider");
+        sounds = document.rootVisualElement.Query<Slider>("SoundsSlider");
         difficulty = document.rootVisualElement.Query<DropdownField>("DifficultySelector");
         effects = document.rootVisualElement.Query<DropdownField>("EffectsSelector");
         goback = document.rootVisualElement.Query<Button>("GoBack");
 
-        volume.RegisterValueChangedCallback(evt => setNewVolume(evt));
+        music.RegisterValueChangedCallback(evt => setNewMusicVolume(evt));
+        sounds.RegisterValueChangedCallback(evt => setNewSoundsVolume(evt));
         difficulty.RegisterValueChangedCallback(evt => setNewDifficulty(evt));
         effects.RegisterValueChangedCallback(evt => setNewEffect(evt));
         goback.RegisterCallback<ClickEvent>(evt => goBack(evt));
@@ -30,11 +32,16 @@ public class OptionsMenu : MonoBehaviour {
     }
 
     private void goBack(ClickEvent evt) {
+        GameManager.instance.playSound("button");
         document.sortingOrder = 0;
     }
 
-    private void setNewVolume(ChangeEvent<float> evt) {
-        GameManager.instance.song.volume = evt.newValue/100f;
+    private void setNewMusicVolume(ChangeEvent<float> evt) {
+        GameManager.instance.music.volume = evt.newValue/100f;
+    }
+
+    private void setNewSoundsVolume(ChangeEvent<float> evt) {
+        GameManager.instance.sounds.volume = evt.newValue/100f;
     }
 
     private void setNewDifficulty(ChangeEvent<string> evt) {

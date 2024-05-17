@@ -3,28 +3,19 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-    public GameObject circlePrefab;
-    public GameObject weaponSet;
-    public bool isMyTurn;
-    private bool isAITurn;
-    private int isFirstMinePlaced;
+    public GameObject circlePrefab, weaponSet;
+    public bool isMyTurn, isAlive;
+    private bool isAITurn, inShootMode, canShoot;
+    private int isFirstMinePlaced, healthPoints, xDirection;
     private List<GameObject> circles;
-    private float speed;
-    public bool isAlive;
-    private int healthPoints;
-    private bool inShootMode;
-    private bool canShoot;
-    private float shotCooldown;
+    private float shotCooldown, speed, movementIATimer;
     private Rigidbody2D rb2d;
     public List<int> ammo;
     public WeaponType currentWeapon;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-    private Vector3 basePosition = new Vector3(30f,0f,0f);
+    private Vector3 basePosition, directionIA;
     public int characterNumber;
-    private int xDirection;
-    private float movementIATimer;
-    private Vector3 directionIA;
     private GameObject shiftSign;
 
     private void handleWanderMode() {
@@ -53,7 +44,7 @@ public class Character : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0) && canShoot) {
             shoot();
-            isMyTurn = false;
+            if(!canShoot) isMyTurn = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
@@ -97,6 +88,7 @@ public class Character : MonoBehaviour {
     }
 
     private void shootMissile(bool isShotByIACharacter) {
+        GameManager.instance.playSound("missile");
         Missile missile = weaponSet.transform.Find("Missile").GetComponent<Missile>();
         Vector3 actualPosition = transform.position;
         Vector3 mousePosition;
@@ -117,6 +109,7 @@ public class Character : MonoBehaviour {
     }
 
     private void useLightsaber() {
+        GameManager.instance.playSound("lightsaber");
         Lightsaber lightsaber = weaponSet.transform.Find("Lightsaber").GetComponent<Lightsaber>();
         Vector3 actualPosition = transform.position;
         Vector3 mousePosition = clickCoordinates(actualPosition);
@@ -129,6 +122,7 @@ public class Character : MonoBehaviour {
     }
 
     private void shootLaserRay() {
+        GameManager.instance.playSound("laserray");
         LaserRay laserRay = weaponSet.transform.Find("LaserRay").GetComponent<LaserRay>();
         string name = gameObject.name;
 
@@ -149,6 +143,7 @@ public class Character : MonoBehaviour {
     }
 
     private void placeMine() {
+        GameManager.instance.playSound("mine");
         List<Transform> mines = new List<Transform>{weaponSet.transform.Find("Mine1"), weaponSet.transform.Find("Mine2")};
         Vector3 actualPosition = transform.position;
         Vector3 mousePosition = clickCoordinates(actualPosition);
@@ -166,26 +161,29 @@ public class Character : MonoBehaviour {
     }
 
     private void shoot() {
-        this.canShoot = false;
         switch (currentWeapon) {
             case WeaponType.Missile:
                 shootMissile(false);
+                this.canShoot = false;
                 break;
             case WeaponType.LaserRay:
                 if(ammo[0]>0) {
                     shootLaserRay();
+                    this.canShoot = false;
                     ammo[0]-=1;
                 }
                 break;
             case WeaponType.Mine:
                 if(ammo[1]>0) {
                     placeMine();
+                    this.canShoot = false;
                     ammo[1]-=1;
                 }
                 break;
             case WeaponType.Lightsaber:
                 if(ammo[2]>0) {
                     useLightsaber();
+                    this.canShoot = false;
                     ammo[2]-=1;
                 }
                 break;
@@ -194,11 +192,13 @@ public class Character : MonoBehaviour {
     }
 
     public void looseHealthPoints(int damage) {
+        GameManager.instance.playSound("damage");
         healthPoints-=damage;
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.GetComponent<Munition>() != null) {
+            GameManager.instance.playSound("munition");
             addAmmo(other);
         }
     }
@@ -283,6 +283,7 @@ public class Character : MonoBehaviour {
     }
 
     public void deactivate() {
+        GameManager.instance.playSound("death");
         isAlive = false;
         decreaseLifes();
         handleWanderMode();
@@ -324,6 +325,7 @@ public class Character : MonoBehaviour {
         isMyTurn = false;
         inShootMode = false;
         currentWeapon = WeaponType.Missile;
+        basePosition = new Vector3(30f,0f,0f);
         ammo = new List<int> {0, 0, 0}; 
         getRigidBody2D();
         spriteRenderer = GetComponent<SpriteRenderer>();

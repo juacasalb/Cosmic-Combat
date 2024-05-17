@@ -50,6 +50,7 @@ public class ShiftSystem : MonoBehaviour {
         planet.resetMobility();
     }
     private void endGame(string title) {
+        if(title.Equals("Has perdido...")) GameManager.instance.playSound("gameover");
         document.enabled = false;
         menutitle.text = title;
         Time.timeScale = 0f;
