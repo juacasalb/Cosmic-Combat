@@ -191,19 +191,19 @@ public class Character : MonoBehaviour {
         handleWanderMode();
     }
 
-    public void looseHealthPoints(int damage) {
-        GameManager.instance.playSound("damage");
+    public void looseHealthPoints(int damage, bool isShotInScene) {
+        if(isShotInScene) GameManager.instance.playSound("damage");
         healthPoints-=damage;
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.GetComponent<Munition>() != null) {
             GameManager.instance.playSound("munition");
-            addAmmo(other);
+            addAmmo(other.gameObject);
         }
     }
 
-    private void fullHealth() {
+    public void fullHealth() {
         healthPoints=200;
     }
 
@@ -221,7 +221,7 @@ public class Character : MonoBehaviour {
         }
     }
     
-    private void addAmmo(Collision2D other) {
+    public void addAmmo(GameObject other) {
         Munition munition = other.gameObject.GetComponent<Munition>();
         if(munition!=null) {
             WeaponType weaponType = munition.weaponType;

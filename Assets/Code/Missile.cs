@@ -22,7 +22,7 @@ public class Missile : Weapon {
             Boss BossScript = collider.GetComponent<Boss>();
 
             if (characterScript != null)
-                characterScript.looseHealthPoints(damage);
+                characterScript.looseHealthPoints(damage, true);
             if (CommonMonsterScript != null)
                 CommonMonsterScript.looseHealthPoints(damage);
             if (BossScript != null)

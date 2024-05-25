@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Munition : MonoBehaviour {
     private Vector3 basePosition = new Vector3(15f, 0f, 0f);
-    private Rigidbody2D rb2d;
+    public Rigidbody2D rb2d;
     public WeaponType weaponType;
 
     public void activate(Vector3 position) {

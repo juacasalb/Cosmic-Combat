@@ -26,7 +26,7 @@ public class LaserRay : Weapon {
         if(other.name!=shooterName) {
             if(other.gameObject.GetComponent<Character>() != null) {
                 Character characterScript = other.gameObject.GetComponent<Character>();
-                characterScript.looseHealthPoints(damage);
+                characterScript.looseHealthPoints(damage, true);
             }
 
             else if (other.gameObject.GetComponent<CommonMonster>() != null) {

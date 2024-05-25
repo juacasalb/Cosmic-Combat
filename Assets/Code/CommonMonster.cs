@@ -8,8 +8,12 @@ public class CommonMonster : Monster {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Rigidbody2D rb2d;
-    private int xDirection;
+    public int xDirection;
     private Vector3 direction;
+
+    public Vector3 getDirection() {
+        return direction;
+    }
 
     protected override void movement(Vector3 direction) { 
         transform.Translate(direction * speed * Time.deltaTime);
@@ -56,7 +60,7 @@ public class CommonMonster : Monster {
         Planet.deleteMobile(gameObject);
     }
 
-    private void calculateNextDirection() {
+    public void calculateNextDirection() {
         xDirection = (UnityEngine.Random.Range(0,2) * 2) - 1;
         direction = new Vector3(xDirection,0f,0f);
     }

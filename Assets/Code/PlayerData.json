@@ -27,6 +27,12 @@
       "earnedItems": [
         "robot"
       ]
+    },
+    {
+      "username": "aaa",
+      "password": "aaa",
+      "score": 0,
+      "earnedItems": []
     }
   ]
 }
