@@ -20,7 +20,7 @@ public class ShiftSystem : MonoBehaviour {
     private string _lifes, _score, _lightsabers, _mines, _laserrays, _secondsleft, _selectedweapon, _shifts, _health;
     private Label lifes, score, lightsabers, mines, laserrays, secondsleft, selectedweapon, shifts, health, menutitle;
 
-    public void setCharacters() {  
+    public void setCharacters() {
         List<string> characterNames = new List<string>{
             GameManager.instance.name1, 
             GameManager.instance.name2, 

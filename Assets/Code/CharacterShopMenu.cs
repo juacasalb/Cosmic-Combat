@@ -24,7 +24,7 @@ public class CharacterShopMenu : MonoBehaviour {
     }
 
     private static void getJSONPath() {
-        string url = Application.dataPath + "/Code/PlayerData.json";
+        string url = Application.persistentDataPath + "/PlayerData.json";
         jsonUrl = url.Replace("/", "\\");
         jsonData = File.ReadAllText(jsonUrl);
     }

@@ -20,11 +20,6 @@ public class PauseMenu : MonoBehaviour {
         exit.RegisterCallback<ClickEvent>(evt => exitGame(evt));
     }
 
-    private void OnDisable() {
-        restart.UnregisterCallback<ClickEvent>(evt => restartGame(evt));
-        exit.UnregisterCallback<ClickEvent>(evt => exitGame(evt));
-    }
-
     void Awake() {
         getButtons();
     }

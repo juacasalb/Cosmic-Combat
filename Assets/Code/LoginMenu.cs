@@ -16,7 +16,7 @@ public class LoginMenu : MonoBehaviour {
     private PlayerDataContainer container;
 
     private void getJSONPath() {
-        string url = Application.dataPath + "/Code/PlayerData.json";
+        string url = Application.persistentDataPath + "/PlayerData.json";
         jsonUrl = url.Replace("/", "\\");
         jsonData = File.ReadAllText(jsonUrl);
     }

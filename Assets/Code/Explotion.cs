@@ -13,7 +13,7 @@ public class Explotion : MonoBehaviour {
     }
 
     void Awake() {
-        gameObject.SetActive(GameManager.instance.areEffectsEnabled);
+        if(GameManager.instance!=null) gameObject.SetActive(GameManager.instance.areEffectsEnabled);
     }
 
     void Update() {

@@ -16,14 +16,7 @@ public class EndGameMenu : MonoBehaviour {
 
     private void getButtons() {
         exit = document.rootVisualElement.Query<Button>("Exit");
-    }
-
-    private void OnEnable() {
         exit.RegisterCallback<ClickEvent>(evt => exitGame(evt));
-    }
-
-    private void OnDisable() {
-        exit.UnregisterCallback<ClickEvent>(evt => exitGame(evt));
     }
 
     void Awake() {
