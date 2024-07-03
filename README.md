@@ -2,4 +2,4 @@
 
 ## README
 
-[Ver PDF](Cosmic-Combat/Cosmic_Combat_TFG.pdf)
+[Ver PDF](Cosmic_Combat_TFG.pdf)
